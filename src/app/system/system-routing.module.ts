@@ -584,16 +584,16 @@ const routes: Routes = [
             }
           ]
         },
-        {
-          path: 'system-information',
-          component: SystemInformationComponent,
-          data: { title: 'System Information', breadcrumb: 'System Information' }
-        },
-        {
-          path: 'about-us',
-          component: AboutUsComponent,
-          data: { title: 'About Us', breadcrumb: 'About Us' }
-        },
+        // {
+        //   path: 'system-information',
+        //   component: SystemInformationComponent,
+        //   data: { title: 'System Information', breadcrumb: 'System Information' }
+        // },
+        // {
+        //   path: 'about-us',
+        //   component: AboutUsComponent,
+        //   data: { title: 'About Us', breadcrumb: 'About Us' }
+        // },
         {
           path: 'audit-trails',
           data: { title: 'Audit Trails', breadcrumb: 'Audit Trails' },

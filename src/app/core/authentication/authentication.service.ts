@@ -66,7 +66,7 @@ export class AuthenticationService {
    */
   private storage: Storage = sessionStorage;
   private credentials: Credentials;
-  private dialogShown = false;
+  private dialogShown = true;
   private authMode: AuthMode = AuthMode.Basic;
 
   /** Promise that resolves once the OIDC discovery document has been loaded. */

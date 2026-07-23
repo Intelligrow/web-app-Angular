@@ -36,6 +36,121 @@ $color: #e2e4ec;
   overflow-x: hidden;
 }
 
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 99999;
+
+  // background: rgba(255, 255, 255, 0.25);
+  // backdrop-filter: blur(2px);
+}
+
+.app-loader {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-ring,
+.loader-ring::before,
+.loader-ring::after {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.loader-ring {
+  background:
+    conic-gradient(
+      from 0deg,
+      #1565c0 0deg,
+      #42a5f5 80deg,
+      transparent 95deg,
+      transparent 150deg,
+      #1565c0 240deg,
+      #42a5f5 310deg,
+      transparent 330deg
+    );
+
+  animation: loaderRotate 1.4s linear infinite;
+}
+
+.loader-ring::before {
+  content: "";
+  inset: 8px;
+  background: #fff;   /* Match your app background */
+  border-radius: 50%;
+}
+
+.loader-ring::after {
+  content: "";
+  inset: 15px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #42a5f5, #1565c0);
+  opacity: .25;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.loader-core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1565c0;
+  box-shadow:
+      0 0 0 0 rgba(21,101,192,.45);
+  animation: corePulse 1.4s ease infinite;
+}
+
+@keyframes loaderRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,100% {
+    transform: scale(.9);
+    opacity: .25;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: .45;
+  }
+}
+
+@keyframes corePulse {
+  0% {
+    transform: scale(.8);
+    box-shadow: 0 0 0 0 rgba(21,101,192,.45);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 14px rgba(21,101,192,0);
+  }
+
+  100% {
+    transform: scale(.8);
+    box-shadow: 0 0 0 0 rgba(21,101,192,0);
+  }
+}
+
+.loader-ring::before{
+    background:#1e1e1e;
+}
+
 @keyframes move {
   0% {
     left: 0;
