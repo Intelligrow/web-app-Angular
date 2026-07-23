@@ -238,8 +238,10 @@ export class WebAppComponent implements OnInit, OnDestroy {
     if (!this.settingsService.servers) {
       this.settingsService.setServers(environment.baseApiUrls.split(','));
     }
-    // Set the Tenant Identifier(s) list from the env var
-    if (!localStorage.getItem('mifosXTenantIdentifier')) {
+    // Set the Tenant Identifier(s) list from the env var.
+    if (environment.autoDetectedTenantId) {
+      this.settingsService.setTenantIdentifier(environment.autoDetectedTenantId);
+    } else if (!localStorage.getItem('mifosXTenantIdentifier')) {
       this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
     }
     this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
