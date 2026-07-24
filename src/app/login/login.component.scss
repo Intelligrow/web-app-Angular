@@ -77,53 +77,6 @@
 // ===== Dark Mode Support =====
 :host-context(.dark-theme),
 :host-context([data-theme='dark']) {
-  
-  .hero-panel {
-    background-color: #0d1321;
-
-    .hero-overlay {
-      background: rgb(0 0 0 / 45%);
-    }
-
-    .hero-title,
-    .hero-title-minimal {
-      color: #f4f7fb;
-    }
-
-    .hero-subtitle,
-    .feature-text {
-      color: #b8c0d4;
-    }
-
-    .hero-highlight {
-      color: #b4d575;
-    }
-
-    .blue-line {
-      background: #4da3e0;
-    }
-
-    .feature-icon {
-      color: #b4d575;
-    }
-
-    .hero-link {
-      color: #f4f7fb;
-      border-color: rgb(255 255 255 / 20%);
-      background: rgb(255 255 255 / 6%);
-
-      &:hover {
-        background: rgb(255 255 255 / 14%);
-        border-color: rgb(255 255 255 / 35%);
-      }
-    }
-
-    .hero-title-minimal {
-      background: rgb(0 0 0 / 45%);
-      border-color: rgb(255 255 255 / 12%);
-    }
-  }
-
   .version-info-container {
     background: var(--md-sys-color-surface-container-low, #2a2a2a);
     border-color: var(--md-sys-color-outline-variant, #3d3d3d);
@@ -157,10 +110,6 @@
     &:hover {
       background: rgb(168 200 255 / 12%);
     }
-  }
-
-  .login-panel {
-    background: var(--md-sys-color-surface-container, #070A12);
   }
 
   .login-card {
@@ -207,17 +156,15 @@
   min-height: 100vh;
   height: 100%;
   width: 100%;
-  // background: url('../../assets/images/cover.png') no-repeat center center;
-  background: #F4F7FB;
-  background-size: cover;
+  background: var(--md-sys-color-background, #fafafa);
   overflow-x: hidden;
 }
 
 // ===== Hero Panel (Left Side) =====
 .hero-panel {
-  flex: 0 0 60%;
+  flex: 0 0 70%;
   position: relative;
-  // background: url('../../assets/images/cover.png') no-repeat center center;
+  background: url('../../assets/images/cover_image_resized.webp') no-repeat center center;
   background-size: cover;
   overflow: hidden;
 
@@ -240,23 +187,22 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding: 4rem;
   }
 
   .hero-text {
-    // max-width: 700px;
-    margin-left: 2rem; 
+    max-width: 550px;
     color: #fff;
     animation: fade-in-up 0.8s ease-out;
     flex: 0 1 auto;
     // Minimal backdrop - more image visibility
-    // background: rgb(0 0 0 / 35%);
-    // border-radius: 20px;
-    // padding: 2rem;
-    // border: 1px solid rgb(255 255 255 / 15%);
-    // box-shadow: 0 4px 24px rgb(0 0 0 / 20%);
+    background: rgb(0 0 0 / 35%);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgb(255 255 255 / 15%);
+    box-shadow: 0 4px 24px rgb(0 0 0 / 20%);
   }
 
   // Footer in hero panel
@@ -297,36 +243,24 @@
   }
 
   .hero-title {
-    font-size: 62px;
-    line-height: 1.15;
+    font-size: 3.5rem;
     font-weight: 700;
     margin: 0 0 1.5rem;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    max-width: 600px;
-    color: #14235c;
-    // text-shadow:
-    //   0 2px 4px rgb(0 0 0 / 30%),
-    //   0 4px 12px rgb(0 0 0 / 15%);
-  }
-
-  .blue-line {
-    width: 70px;
-    height: 5px;
-    background: #1074b9;
-    border-radius: 20px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+    color: #fff;
+    text-shadow:
+      0 2px 4px rgb(0 0 0 / 30%),
+      0 4px 12px rgb(0 0 0 / 15%);
   }
 
   .hero-subtitle {
-    font-size: 25px;
-    line-height: 1.8;
+    font-size: 1.25rem;
+    line-height: 1.6;
     margin: 0 0 2rem;
     font-weight: 400;
-    color: #58627c;
-    // text-shadow: 0 1px 3px rgb(0 0 0 / 40%);
-    max-width: 780px;
+    color: rgb(255 255 255 / 95%);
+    text-shadow: 0 1px 3px rgb(0 0 0 / 40%);
   }
 
   .hero-highlight {
@@ -365,7 +299,7 @@
   .feature-text {
     font-size: 0.95rem;
     font-weight: 500;
-    color: #58627c;
+    color: rgb(255 255 255 / 95%);
     text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
   }
 
@@ -410,7 +344,6 @@
   &.production-mode {
     .hero-content {
       justify-content: flex-end;
-      align-items: flex-start;
       padding-bottom: 3rem;
     }
   }
@@ -440,7 +373,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: transparent;
+  background: var(--md-sys-color-surface, #fff);
   position: relative;
   min-height: -webkit-fill-available; // Safari fix: use available height
   min-height: 100vh;
@@ -451,7 +384,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 3rem 2rem 2rem 10rem;
+  padding: 0.75rem 1rem;
   background: transparent;
   flex-shrink: 0; // Safari fix: prevent header from growing
   max-height: 76px; // Safari fix: constrain header height
@@ -579,26 +512,22 @@
 
 .login-card {
   width: 100%;
-  max-width: 580px;
+  max-width: 480px;
   background: var(--md-sys-color-surface-container-low, #fff);
   border-radius: 28px;
-  padding: 55px;
+  padding: 1.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   margin-top: auto; // Safari fix: push card to center using margin
   margin-bottom: auto;
-  box-shadow:
-    0 2px 4px #00000014,
-    0 4px 12px #0000000f,
-    0 12px 32px #0000001f; 
 
-  // &:hover {
-  //   box-shadow:
-  //     0 2px 4px #00000014,
-  //     0 4px 12px #0000000f,
-  //     0 12px 32px #0000001f;
-  // }
+  &:hover {
+    box-shadow:
+      0 2px 4px #00000014,
+      0 4px 12px #0000000f,
+      0 12px 32px #0000001f;
+  }
 }
 
 // ===== Logo Section =====
@@ -612,8 +541,8 @@
 }
 
 .logo-image {
-  // height: 130px;
-  width: 400px;
+  height: 130px;
+  width: auto;
   margin: 8px 24px;
   opacity: 0.95;
   transition: opacity 0.3s ease;
