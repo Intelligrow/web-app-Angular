@@ -32,6 +32,8 @@ export interface TenantBranding {
   logoUrl?: string;
   logoUrlDark?: string;
   heroImageUrl?: string;
+  loginWelcomeTextKey?: string;
+  LoginToYourAccountKey?: string;
 }
 
 interface TenantConfigResponse {
@@ -49,13 +51,8 @@ export class TenantBrandingService {
   private http = inject(HttpClient);
 
   getTenantBranding(tenantId: string): Observable<TenantBranding> {
-    const params = new HttpParams().set('tenantIdentifier', tenantId);
-
-    return this.http.get<TenantConfigResponse>('/tenant/config', { params }).pipe(
-      map((response) => this.mergeConfig(response)),
-      catchError(() => of(this.getFallbackBranding('NBFC')))
-    );
-  }
+      return of(this.getFallbackBranding('NBFC'));
+    }
 
   getFallbackBranding(type: OrganizationType): TenantBranding {
     const variants: Record<OrganizationType, TenantBranding> = {
@@ -67,13 +64,16 @@ export class TenantBrandingService {
         subtitleKey: 'labels.login.NBFC Subtitle',
         trustTitleKey: 'labels.login.Built for regulated lenders',
         trustTextKey: 'labels.login.Secure compliant and scalable',
-        heroImageUrl: 'assets/images/cover_image_resized.webp',
+        logoUrl: 'intelligrow-white.png',
+        heroImageUrl: 'NBFC_logo.png',
         features: [
           { icon: 'money-bill', labelKey: 'labels.login.Loan Origination' },
           { icon: 'chart-line', labelKey: 'labels.login.Credit Analytics' },
           { icon: 'shield-alt', labelKey: 'labels.login.Risk Management' },
           { icon: 'globe', labelKey: 'labels.login.Portfolio Monitoring' }
-        ]
+        ],
+        loginWelcomeTextKey: 'labels.login.NBFC Welcome Text',
+        LoginToYourAccountKey: 'labels.login.LoginToYourAccount'
       },
       MFI: {
         organizationType: 'MFI',
@@ -83,13 +83,16 @@ export class TenantBrandingService {
         subtitleKey: 'labels.login.MFI Subtitle',
         trustTitleKey: 'labels.login.Driving financial inclusion',
         trustTextKey: 'labels.login.Simple accessible and people first',
-        heroImageUrl: 'assets/images/cover_image_resized.webp',
+        logoUrl: 'intelligrow.png',
+        heroImageUrl: 'MFI_logo.png',
         features: [
           { icon: 'users', labelKey: 'labels.login.Group Lending' },
-          { icon: 'handshake', labelKey: 'labels.login.Client Management' },
+          // { icon: 'handshake', labelKey: 'labels.login.Client Management' },
           { icon: 'money-bill', labelKey: 'labels.login.Collection Tracking' },
           { icon: 'file-alt', labelKey: 'labels.login.Impact Reports' }
-        ]
+        ],
+        loginWelcomeTextKey: 'labels.login.MFI Welcome Text',
+        LoginToYourAccountKey: 'labels.login.LoginToYourAccount'
       },
       SMALL_INSTITUTION: {
         organizationType: 'SMALL_INSTITUTION',
@@ -99,13 +102,16 @@ export class TenantBrandingService {
         subtitleKey: 'labels.login.Small Institution Subtitle',
         trustTitleKey: 'labels.login.Designed for daily operations',
         trustTextKey: 'labels.login.Fast reliable and easy to use',
-        heroImageUrl: 'assets/images/cover_image_resized.webp',
+        logoUrl: 'intelligrow.png',
+        heroImageUrl: 'SMALL_FINANCE_logo.png',
         features: [
           { icon: 'money-bill', labelKey: 'labels.login.Loan Management' },
           { icon: 'users', labelKey: 'labels.login.Customer Records' },
           { icon: 'calendar-check', labelKey: 'labels.login.Repayment Tracking' },
           { icon: 'file-alt', labelKey: 'labels.login.Business Reports' }
-        ]
+        ],
+        loginWelcomeTextKey: 'labels.login.Small Institution Welcome Text',
+        LoginToYourAccountKey: 'labels.login.LoginToYourAccount'
       }
     };
 

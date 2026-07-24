@@ -487,8 +487,12 @@
       "Portal": "Portal",
       "Sign in to continue": "Sign in to continue to your",
       "Sign in to continue to your account": "Sign in to continue to your account",
-      "Intelligrow Copyright": "© 2025 Intelligrow Bancsoft. All rights reserved.",
-      "portal": "portal"
+      "Intelligrow Copyright": "© 2026 Intelligrow Bancsoft. All rights reserved.",
+      "portal": "portal",
+      "LoginToYourAccount": "Login to Your Account",
+      "NBFC Welcome Text": "Welcome to Intelligrow NBFC Portal",
+      "MFI Welcome Text": "Welcome to Intelligrow MFI Portal",
+      "Small Institution Welcome Text": "Welcome to Intelligrow Small Institution Portal"
     },
     "aboutUs": {
       "Introduction": "The Mifos Initiative is a 501(c)(3) non-profit organization and a global community of developers, financial institutions, and social entrepreneurs. We believe that access to financial services is a fundamental human right, yet billions of people remain excluded from the formal financial system.",

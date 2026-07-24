@@ -156,7 +156,9 @@
   min-height: 100vh;
   height: 100%;
   width: 100%;
-  background: var(--md-sys-color-background, #fafafa);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   overflow-x: hidden;
 }
 
@@ -164,22 +166,7 @@
 .hero-panel {
   flex: 0 0 70%;
   position: relative;
-  background: url('../../assets/images/cover_image_resized.webp') no-repeat center center;
-  background-size: cover;
   overflow: hidden;
-
-  // Overlay removed for clean image view
-  .hero-overlay {
-    position: absolute;
-    /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Safari compatibility */
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /* stylelint-enable declaration-block-no-redundant-longhand-properties */
-    background: transparent;
-    z-index: 1;
-  }
 
   .hero-content {
     position: relative;
@@ -187,120 +174,93 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     padding: 4rem;
   }
 
-  .hero-text {
-    max-width: 550px;
-    color: #fff;
-    animation: fade-in-up 0.8s ease-out;
-    flex: 0 1 auto;
-    // Minimal backdrop - more image visibility
-    background: rgb(0 0 0 / 35%);
-    border-radius: 20px;
-    padding: 2rem;
-    border: 1px solid rgb(255 255 255 / 15%);
-    box-shadow: 0 4px 24px rgb(0 0 0 / 20%);
+  .hero-logo {
+    position: absolute;
+    top: clamp(2rem, 6vh, 6rem);
+    left: clamp(1rem, 3vw, 4rem);
+    height: clamp(4rem, 7vh, 7rem);
+    width: auto;
+    z-index: 3;
   }
 
-  // Footer in hero panel
-  mifosx-footer {
-    width: 100%;
-    margin-top: auto;
-    padding-top: 2rem;
+  .hero-text {
+    max-width: 650px;
+    color: #fff;
+    animation: fade-in-up 0.8s ease-out;
+    padding: 2rem;
+    border-radius: 5%;
 
-    ::ng-deep .footer-compact {
-      color: rgb(255 255 255 / 90%);
-      align-items: center;
-      text-align: center;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.28) 45%,
+      rgba(0, 0, 0, 0.10) 75%,
+      transparent 100%
+    );
 
-      .footer-info {
-        justify-content: center;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(20px);
+  }
 
-        .info-label {
-          color: rgb(255 255 255 / 80%);
-          font-weight: 500;
-        }
-
-        .info-value {
-          color: rgb(255 255 255 / 95%);
-          font-weight: 400;
-        }
-
-        .info-separator {
-          color: rgb(255 255 255 / 50%);
-        }
-      }
-
-      .footer-copyright {
-        color: rgb(255 255 255 / 75%);
-        font-size: 0.875rem;
-        text-align: center;
-      }
-    }
+  .hero-badge {
+    font-size: 3rem;
+    font-weight: 850;
+    margin: 0 0 0.75rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-shadow: 0 2px 6px rgb(0 0 0 / 35%);
   }
 
   .hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    font-size: 2.75rem;
+    font-weight: 800;
+    margin: 0 0 0.75rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: #fff;
-    text-shadow:
-      0 2px 4px rgb(0 0 0 / 30%),
-      0 4px 12px rgb(0 0 0 / 15%);
+    text-shadow: 0 2px 6px rgb(0 0 0 / 35%);
   }
 
   .hero-subtitle {
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.5;
     margin: 0 0 2rem;
     font-weight: 400;
-    color: rgb(255 255 255 / 95%);
+    color: rgb(255 255 255 / 90%);
+    max-width: 420px;
     text-shadow: 0 1px 3px rgb(0 0 0 / 40%);
-  }
-
-  .hero-highlight {
-    font-weight: 600;
-    color: #b4d575;
-    text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
   }
 
   .hero-features {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    flex-direction: row;
+    gap: 2.5rem;
+    flex-wrap: wrap;
   }
 
   .feature-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
-    background: transparent;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateX(4px);
-    }
+    gap: 0.5rem;
+    text-align: center;
   }
 
   .feature-icon {
-    font-size: 1.25rem;
-    color: #b4d575;
-    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 30%));
+    font-size: 1.5rem;
+    color: #fff;
   }
 
   .feature-text {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    color: rgb(255 255 255 / 95%);
-    text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+    color: rgb(255 255 255 / 90%);
+    white-space: nowrap;
   }
 
   .hero-links {
@@ -366,6 +326,19 @@
     border-radius: 16px;
     border: 1px solid rgb(255 255 255 / 15%);
   }
+
+  &.theme-nbfc {
+    --md-sys-color-primary: #1074b9;
+    --brand-highlight: #b4d575;
+  }
+  &.theme-mfi {
+    --md-sys-color-primary: #2e7d32;
+    --brand-highlight: #a5d6a7;
+  }
+  &.theme-small-institution {
+    --md-sys-color-primary: #b5651d;
+    --brand-highlight: #ffb74d;
+  }
 }
 
 // ===== Login Panel (Right Side) =====
@@ -373,7 +346,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--md-sys-color-surface, #fff);
+  background: transparent;
   position: relative;
   min-height: -webkit-fill-available; // Safari fix: use available height
   min-height: 100vh;
@@ -383,8 +356,9 @@
 .login-header {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 1.5rem 2rem;
   background: transparent;
   flex-shrink: 0; // Safari fix: prevent header from growing
   max-height: 76px; // Safari fix: constrain header height
@@ -504,19 +478,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; // Safari fix: avoid center calculation issues
-  padding: 0 1rem 1rem;
+  justify-content: center; // Safari fix: avoid center calculation issues
+  padding: 0 2rem;
   min-height: 0; // Safari fix: allows flex item to shrink below content size
   animation: fade-in 0.6s ease-out;
 }
 
 .login-card {
   width: 100%;
-  max-width: 480px;
+  max-width: 650px;
   background: var(--md-sys-color-surface-container-low, #fff);
-  border-radius: 28px;
-  padding: 1.5rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 20px;
+  padding: 2rem;
+   box-shadow:
+    0 4px 24px rgb(0 0 0 / 15%),
+    0 12px 48px rgb(0 0 0 / 20%);
   display: flex;
   flex-direction: column;
   margin-top: auto; // Safari fix: push card to center using margin
@@ -528,6 +504,22 @@
       0 4px 12px #0000000f,
       0 12px 32px #0000001f;
   }
+}
+
+.login-card-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--md-sys-color-on-surface, #1a1c1e);
+  text-align: center;
+}
+
+.login-card-subtitle {
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--md-sys-color-on-surface-variant, #44474e);
+  text-align: center;
 }
 
 // ===== Logo Section =====

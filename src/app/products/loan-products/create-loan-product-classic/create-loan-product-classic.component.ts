@@ -367,10 +367,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
       .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(
-          [
-            '../',
-            response.resourceId
-          ],
+          ['../../'],
           {
             queryParams: {
               productType: this.loanProductService.productType.value

@@ -107,14 +107,17 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <mifosx-web-app>
       <div class="loader-wrapper">
-        <lottie-player
-          class="lottie-spinner"
-          src="assets/loading_animation.json"
-          background="transparent"
-          speed="1"
-          loop
-          autoplay
-        ></lottie-player>
+        <div class="secure-loader">
+          <div class="ring ring-1"><span class="node"></span></div>
+          <div class="ring ring-2"><span class="node"></span></div>
+          <div class="ring ring-3"><span class="node"></span></div>
+          <div class="logo-container">
+            <img src="assets/images/intelligrow-white.png" alt="Intelligrow" class="loader-logo">
+          </div>
+        </div>
+        <div class="loader-text">
+          Securing your workspace<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+        </div>
       </div>
     </mifosx-web-app>
   </body>
