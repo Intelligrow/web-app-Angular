@@ -7,28 +7,33 @@
  */
 
 (function (window) {
-  window["env"] = window["env"] || {};
+  window['env'] = window['env'] || {};
 
   // BackEnd Environment variables
-  window["env"]["fineractApiUrls"] = '';
-  window["env"]["fineractApiUrl"] = '';
+  window['env']['fineractApiUrls'] = '';
 
-  window["env"]["apiProvider"] = '';
-  window["env"]["apiVersion"] = '';
-  window["env"]["apiActuator"] = '';
+  window['env']['fineractApiUrl'] = '';
 
-  window["env"]["fineractPlatformTenantId"] = '';
-  window["env"]["fineractPlatformTenantIds"] = '';
+  window['env']['apiProvider'] = '';
+
+  window['env']['apiVersion'] = '';
+
+  window['env']['apiActuator'] = '';
+
+  window['env']['fineractPlatformTenantId'] = '';
+
+  window['env']['fineractPlatformTenantIds'] = 'aps,default';
 
   window['env']['tenantLogoUrl'] = '';
   window['env']['tenantLogoUrlDark'] = '';
 
   // Language Environment variables
-  window["env"]["defaultLanguage"] = '';
-  window["env"]["supportedLanguages"] = '';
+  window['env']['defaultLanguage'] = '';
 
-  window["env"]["defaultFormatDate"] = '';
-  window["env"]["defaultFormatDatetime"] = '';
+  window['env']['supportedLanguages'] = '';
+
+  window['env']['defaultFormatDate'] = '';
+  window['env']['defaultFormatDatetime'] = '';
 
   window['env']['preloadClients'] = '';
 
@@ -36,7 +41,7 @@
   window['env']['defaultCharDelimiter'] = '';
 
   // Display or not the Server Selector
-  window['env']['allowServerSwitch'] = '';
+  window['env']['allowServerSwitch'] = 'true';
 
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
@@ -45,7 +50,10 @@
   window['env']['productionMode'] = '';
 
   // Display or not the Tenant Selector
-  window['env']['displayTenantSelector'] = '';
+  window['env']['displayTenantSelector'] = 'true';
+
+  // Documentation base URL for in-app help links
+  window['env']['documentationBaseUrl'] = '';
 
   // Time in seconds for Notifications, default 60 seconds
   window['env']['waitTimeForNotifications'] = '';
@@ -54,10 +62,10 @@
   window['env']['waitTimeForCOBCatchUp'] = '';
 
   // Time in milliseconds for Session idle timeout, default 300000 seconds
-  window['env']['sessionIdleTimeout'] = '0';
+  window['env']['sessionIdleTimeout'] = '300000';
 
   // OAuth Server Enabled
-  window['env']['oauthServerEnabled'] = false;
+  window['env']['oauthServerEnabled'] = '';
 
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '';
@@ -80,55 +88,52 @@
   // OAuth Scope
   window['env']['oauthScope'] = '';
 
+  // Min Password length
+  window['env']['minPasswordLength'] = '';
+
+  // Password Regex
+  window['env']['minPasswordLength'] = '';
+
+  // Enable or Disable HTTP Cache
+  window['env']['httpCacheEnabled'] = '';
 
   // Hide client data (mask names)
   window['env']['complianceHideClientData'] = '';
 
-  // Interbank Transfers Environment variables
   window['env']['mifosInterbankTransfersApiUrl'] = '';
   window['env']['mifosInterbankTransfersApiProvider'] = '';
   window['env']['mifosInterbankTransfersApiVersion'] = '';
-  window['env']['mifosInterbankTransfersEnabled'] = 'true';
+  window['env']['mifosInterbankTransfersEnabled'] = '';
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '';
   window['env']['mifosRemittanceApiProvider'] = '';
   window['env']['mifosRemittanceApiVersion'] = '';
-  window['env']['mifosRemittanceEnabled'] = false;
+  window['env']['mifosRemittanceEnabled'] = '';
   window['env']['mifosRemittanceApiClientHeader'] = '';
   window['env']['mifosRemittanceApiClientKey'] = '';
 
   // Mifos Copilot AI assistant
-  // Set enableCopilot to 'true' to load the Copilot panel for this deployment (off by default)
-  window['env']['enableCopilot'] = false;
-  window['env']['copilotMcpBaseUrl'] = 'https://ai.mifos.community';
+  // Set MIFOS_ENABLE_COPILOT=true to load the Copilot panel for this deployment (off by default)
+  window['env']['enableCopilot'] = '';
+  window['env']['copilotMcpBaseUrl'] = '';
 
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
-  // Set to true to enable RBAC, false (default) for backward compatibility
-  window['env']['productionModeEnableRBAC'] = false;
+  // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
+  window['env']['productionModeEnableRBAC'] = '';
 
-  // External National ID System
-  // Set to 'true' to enable External National ID lookup during client creation/editing
-  // When enabled, set EXTERNAL_NATIONAL_ID_SYSTEM_URL, API_HEADER, API_KEY, and REGEX
-  // In production, API key is injected server-side via nginx proxy_set_header (never set here)
-  window['env']['enableExternalNationalIdSystem'] = 'false';
+  // External National ID System Integration
+  // API key is injected server-side via nginx proxy_set_header — not exposed to browser
+  window['env']['enableExternalNationalIdSystem'] = '';
   window['env']['externalNationalIdSystemUrl'] = '';
   window['env']['externalNationalIdSystemApiHeader'] = '';
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
-  // Postal Code Lookup (auto-fill address from postal code via external API)
-  // Set to 'true' to enable, 'false' (default) to disable
-  window['env']['enablePostalCodeLookup'] = 'false';
-
-  // Password Configuration
-  window['env']['minPasswordLength'] = 8;
-
   // OIDC Plugin Environment variables
-  window['env']['oidcServerEnabled'] = false;
+  window['env']['oidcServerEnabled'] = '';
   window['env']['oidcBaseUrl'] = '';
   window['env']['oidcClientId'] = '';
   window['env']['oidcApiUrl'] = '';
   window['env']['oidcFrontUrl'] = '';
-
 })(this);

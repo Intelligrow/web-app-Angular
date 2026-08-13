@@ -85,6 +85,17 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
+import {
+  AgentCollectionDetailComponent,
+  AgentCollectionFormComponent,
+  AgentCollectionStatementComponent,
+  AgentCollectionSummaryComponent,
+  AgentCollectionTransactionsComponent,
+  AgentCollectionsComponent,
+  AgentSettlementDetailComponent,
+  AgentSettlementFormComponent,
+  AgentSettlementsComponent
+} from './agent-collections/agent-collections.component';
 
 /**
  * Organization Module
@@ -159,7 +170,16 @@ import { InvestorsComponent } from './investors/investors.component';
     CreateFundComponent,
     EditFundComponent,
     ViewFundComponent,
-    InvestorsComponent
+    InvestorsComponent,
+    AgentCollectionsComponent,
+    AgentCollectionFormComponent,
+    AgentCollectionDetailComponent,
+    AgentCollectionSummaryComponent,
+    AgentCollectionTransactionsComponent,
+    AgentCollectionStatementComponent,
+    AgentSettlementsComponent,
+    AgentSettlementFormComponent,
+    AgentSettlementDetailComponent
   ],
   providers: [
     CreateHoliday,

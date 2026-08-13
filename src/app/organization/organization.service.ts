@@ -877,4 +877,135 @@ export class OrganizationService {
   deleteLoanOriginator(originatorId: number): Observable<any> {
     return this.http.delete(`/loan-originators/${originatorId}`);
   }
+
+  /**
+   * @param queryParams Agent list filters.
+   * @returns {Observable<any>} Agent collection agents.
+   */
+  getAgents(queryParams: any = {}): Observable<any> {
+    return this.http.get('/agents', { params: this.buildHttpParams(queryParams) });
+  }
+
+  /**
+   * @param queryParams Agent template lookup associations.
+   * @returns {Observable<any>} Agent template lookup data.
+   */
+  getAgentTemplate(queryParams: any = {}): Observable<any> {
+    return this.http.get('/agents/template', { params: this.buildHttpParams(queryParams) });
+  }
+
+  /**
+   * @param agentId Agent identifier.
+   * @returns {Observable<any>} Agent data.
+   */
+  getAgent(agentId: string | null): Observable<any> {
+    return this.http.get(`/agents/${agentId}`);
+  }
+
+  /**
+   * @param payload Agent payload.
+   * @returns {Observable<any>} Created agent command response.
+   */
+  createAgent(payload: any): Observable<any> {
+    return this.http.post('/agents', payload);
+  }
+
+  /**
+   * @param agentId Agent identifier.
+   * @param payload Agent payload.
+   * @returns {Observable<any>} Updated agent command response.
+   */
+  updateAgent(agentId: string | null, payload: any): Observable<any> {
+    return this.http.put(`/agents/${agentId}`, payload);
+  }
+
+  /**
+   * @param agentId Agent identifier.
+   * @param command Agent command.
+   * @returns {Observable<any>} Agent command response.
+   */
+  executeAgentCommand(agentId: string, command: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/agents/${agentId}`, {}, { params: httpParams });
+  }
+
+  /**
+   * @param agentId Agent identifier.
+   * @param queryParams Summary filters.
+   * @returns {Observable<any>} Agent collection summary.
+   */
+  getAgentSummary(agentId: string | null, queryParams: any = {}): Observable<any> {
+    return this.http.get(`/agents/${agentId}/summary`, { params: this.buildHttpParams(queryParams, true) });
+  }
+
+  /**
+   * @param queryParams Collection transaction filters.
+   * @returns {Observable<any>} Agent collection transactions.
+   */
+  getAgentCollectionTransactions(queryParams: any = {}): Observable<any> {
+    return this.http.get('/agents/collections', { params: this.buildHttpParams(queryParams, true) });
+  }
+
+  /**
+   * @param agentId Agent identifier.
+   * @param queryParams Statement filters.
+   * @returns {Observable<any>} Agent collection statement.
+   */
+  getAgentStatement(agentId: string | null, queryParams: any = {}): Observable<any> {
+    return this.http.get(`/agents/${agentId}/statement`, { params: this.buildHttpParams(queryParams, true) });
+  }
+
+  /**
+   * @param queryParams Settlement filters.
+   * @returns {Observable<any>} Agent settlements.
+   */
+  getAgentSettlements(queryParams: any = {}): Observable<any> {
+    return this.http.get('/agents/settlements', { params: this.buildHttpParams(queryParams, true) });
+  }
+
+  /**
+   * @param payload Settlement payload.
+   * @returns {Observable<any>} Created settlement command response.
+   */
+  createAgentSettlement(payload: any): Observable<any> {
+    return this.http.post('/agents/settlements', payload);
+  }
+
+  /**
+   * @param settlementId Settlement identifier.
+   * @returns {Observable<any>} Settlement data.
+   */
+  getAgentSettlement(settlementId: string | null): Observable<any> {
+    return this.http.get(`/agents/settlements/${settlementId}`);
+  }
+
+  /**
+   * @param settlementId Settlement identifier.
+   * @param command Settlement command.
+   * @param payload Command payload.
+   * @returns {Observable<any>} Settlement command response.
+   */
+  executeAgentSettlementCommand(settlementId: string, command: string, payload: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/agents/settlements/${settlementId}`, payload, { params: httpParams });
+  }
+
+  /**
+   * @param queryParams Params to convert.
+   * @param includeTenantLocale Whether to add locale/date format defaults.
+   * @returns Http params without empty filter values.
+   */
+  private buildHttpParams(queryParams: any, includeTenantLocale: boolean = false): HttpParams {
+    let httpParams = includeTenantLocale
+      ? new HttpParams()
+          .set('locale', this.settingsService.language.code)
+          .set('dateFormat', this.settingsService.dateFormat)
+      : new HttpParams();
+    for (const key in queryParams) {
+      if (queryParams[key] !== '' && queryParams[key] !== null && queryParams[key] !== undefined) {
+        httpParams = httpParams.set(key, queryParams[key]);
+      }
+    }
+    return httpParams;
+  }
 }

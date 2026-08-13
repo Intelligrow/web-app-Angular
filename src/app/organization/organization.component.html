@@ -435,6 +435,34 @@
             </mat-list-item>
           </div>
 
+          <div #agentcollections>
+            <mat-list-item *mifosxHasPermission="'READ_AGENT'">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['agent-collections']">
+                  <mat-icon>
+                    <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Agent Collections' | translate }}
+                    @if (arrowBooleans[19]) {
+                      <p matLine [routerLink]="['agent-collections']" class="menu-explanation">
+                        {{ 'labels.text.Manage agent collection limits and settlement reviews' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[19]) {
+                    <fa-icon (click)="arrowBooleansToggle(19)" icon="arrow-down" size="md"></fa-icon>
+                  }
+                  @if (arrowBooleans[19]) {
+                    <fa-icon (click)="arrowBooleansToggle(19)" icon="arrow-up" size="md"></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
           <div #paymenttypes>
             <mat-list-item *mifosxHasPermission="'READ_PAYMENTTYPE'">
               <div class="menu-list-item-content">
