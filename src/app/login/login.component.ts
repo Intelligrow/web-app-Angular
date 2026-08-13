@@ -47,6 +47,8 @@ import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 import { VersionService } from '../system/version.service';
 
+import { TenantBrandingService, TenantBranding } from './tenant-branding.service';
+
 /**
  * Login component.
  */
@@ -86,6 +88,9 @@ export class LoginComponent implements OnInit {
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
+  
+  private tenantBrandingService = inject(TenantBrandingService);
+  branding: TenantBranding | null = null;
 
   public environment = environment;
 
@@ -105,7 +110,7 @@ export class LoginComponent implements OnInit {
   /** True if user requires two factor authentication. */
   twoFactorAuthenticationRequired = false;
   logoPath = 'assets/images/default_home.png';
-  logoPathDark = 'assets/images/white-mifos.png';
+  logoPathDark = 'assets/images/intelligrow-bg.jpg';
 
   themeDarkEnabled: boolean = false;
 
@@ -115,6 +120,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.showTenantSelector = this.calculateTenantSelectorVisibility();
     this.updateLogo();
+    this.loadBranding();
     this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
     // Subscribe to theme changes
     this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
@@ -139,6 +145,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/'], { replaceUrl: true });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
+        this.loadBranding();
       }
     });
 
@@ -170,6 +177,13 @@ export class LoginComponent implements OnInit {
         }
       );
     this.server = this.settingsService.server;
+  }
+
+  private loadBranding(): void {
+    const tenantId = this.settingsService.tenantIdentifier || 'default';
+    this.tenantBrandingService.getTenantBranding(tenantId).subscribe((branding) => {
+      this.branding = branding;
+    });
   }
 
   reloadSettings(): void {
