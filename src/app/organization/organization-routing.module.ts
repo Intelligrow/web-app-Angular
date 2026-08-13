@@ -117,6 +117,17 @@ import { ViewLoanOriginatorComponent } from './loan-originators/view-loan-origin
 import { EditLoanOriginatorComponent } from './loan-originators/edit-loan-originator/edit-loan-originator.component';
 import { CreateLoanOriginatorComponent } from './loan-originators/create-loan-originator/create-loan-originator.component';
 import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-originators-template.resolver';
+import {
+  AgentCollectionDetailComponent,
+  AgentCollectionFormComponent,
+  AgentCollectionStatementComponent,
+  AgentCollectionSummaryComponent,
+  AgentCollectionTransactionsComponent,
+  AgentCollectionsComponent,
+  AgentSettlementDetailComponent,
+  AgentSettlementFormComponent,
+  AgentSettlementsComponent
+} from './agent-collections/agent-collections.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -516,6 +527,71 @@ const routes: Routes = [
                       ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          path: 'agent-collections',
+          data: { title: 'Agent Collections', breadcrumb: 'Agent Collections' },
+          children: [
+            {
+              path: '',
+              component: AgentCollectionsComponent
+            },
+            {
+              path: 'create',
+              component: AgentCollectionFormComponent,
+              data: { title: 'Create Agent', breadcrumb: 'Create Agent' }
+            },
+            {
+              path: 'transactions',
+              component: AgentCollectionTransactionsComponent,
+              data: { title: 'Agent Collection Transactions', breadcrumb: 'Transactions' }
+            },
+            {
+              path: 'settlements',
+              data: { title: 'Agent Settlements', breadcrumb: 'Settlements' },
+              children: [
+                {
+                  path: '',
+                  component: AgentSettlementsComponent
+                },
+                {
+                  path: 'create',
+                  component: AgentSettlementFormComponent,
+                  data: { title: 'Create Settlement', breadcrumb: 'Create Settlement' }
+                },
+                {
+                  path: ':settlementId',
+                  component: AgentSettlementDetailComponent,
+                  data: { title: 'View Settlement', routeParamBreadcrumb: 'settlementId' }
+                }
+              ]
+            },
+            {
+              path: ':agentId',
+              data: { title: 'View Agent', routeParamBreadcrumb: 'agentId' },
+              children: [
+                {
+                  path: '',
+                  component: AgentCollectionDetailComponent
+                },
+                {
+                  path: 'edit',
+                  component: AgentCollectionFormComponent,
+                  data: { title: 'Edit Agent', breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'summary',
+                  component: AgentCollectionSummaryComponent,
+                  data: { title: 'Agent Collection Summary', breadcrumb: 'Summary', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'statement',
+                  component: AgentCollectionStatementComponent,
+                  data: { title: 'Agent Collection Statement', breadcrumb: 'Statement', routeParamBreadcrumb: false }
                 }
               ]
             }
