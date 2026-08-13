@@ -107,17 +107,31 @@
                   <strong>{{ 'labels.commons.50 characters long' | translate }}</strong>
                 </mat-error>
               }
-              @if (
-                userForm.controls.password.hasError('pattern') &&
-                !(userForm.controls.password.hasError('minlength') || userForm.controls.password.hasError('maxlength'))
-              ) {
-                <mat-error>
-                  {{ 'labels.commons.Password should include a' | translate }}
-                  <strong>{{ 'labels.commons.numeral' | translate }}</strong> {{ 'labels.commons.and at' | translate }}
-                  <strong>{{ 'labels.commons.least one uppercase' | translate }}</strong> ,<strong>{{
-                    'labels.commons.lowercase and special character' | translate
-                  }}</strong>
+              @if (userForm.controls.password.hasError('uppercase')) {
+                <mat-error>{{ 'labels.commons.Password should include a' | translate }}
+                  <strong>{{ 'labels.commons.least one uppercase' | translate }}</strong>
                 </mat-error>
+              }
+              @if (userForm.controls.password.hasError('lowercase')) {
+                <mat-error>{{ 'labels.commons.Password should include a' | translate }}
+                  <strong>{{ 'labels.commons.least one lowercase' | translate }}</strong>
+                </mat-error>
+              }
+              @if (userForm.controls.password.hasError('number')) {
+                <mat-error>{{ 'labels.commons.Password should include a' | translate }}
+                  <strong>{{ 'labels.commons.numeral' | translate }}</strong>
+                </mat-error>
+              }
+              @if (userForm.controls.password.hasError('specialChar')) {
+                <mat-error>{{ 'labels.commons.Password should include a' | translate }}
+                  <strong>{{ 'labels.commons.special character' | translate }}</strong>
+                </mat-error>
+              }
+              @if (userForm.controls.password.hasError('repeated')) {
+                <mat-error>{{ 'labels.commons.repeating characters' | translate }}</mat-error>
+              }
+              @if (userForm.controls.password.hasError('spaces')) {
+                <mat-error>{{ 'labels.commons.contain spaces' | translate }}</mat-error>
               }
             </mat-form-field>
           }

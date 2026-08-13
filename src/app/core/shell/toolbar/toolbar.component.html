@@ -87,10 +87,10 @@
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
       </a>
-      <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0" *mifosxHasPermission="'READ_CONFIG_WIZARD'">
+      <!-- <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0" *mifosxHasPermission="'READ_CONFIG_WIZARD'">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
         {{ 'labels.menus.Configuration Wizard' | translate }}
-      </a>
+      </a> -->
     </span>
   </div>
 
@@ -120,7 +120,7 @@
   </div>
 
   <div #themeToggle>
-    <mifosx-theme-toggle tabindex="0"></mifosx-theme-toggle>
+    <mifosx-theme-toggle style="color: black;" tabindex="0"></mifosx-theme-toggle>
   </div>
 
   <div #appMenu>

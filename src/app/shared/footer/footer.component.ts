@@ -79,7 +79,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   displayBackEndInfo = true;
 
   constructor() {
-    this.displayBackEndInfo = environment.displayBackEndInfo === 'true';
+    this.displayBackEndInfo = environment.displayBackEndInfo === 'false';
     this.setUserInfo();
     this.renderTime = new Date();
   }
