@@ -1,0 +1,37 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.table-container {
+  overflow: auto;
+}
+
+table {
+  min-width: 960px;
+  width: 100%;
+}
+
+.settlement-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+}
+
+.settlement-form-action {
+  align-self: flex-start;
+}
+
+.settlement-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settlement-summary p {
+  margin: 0;
+}

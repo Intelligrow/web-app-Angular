@@ -32,7 +32,10 @@ const routes: Routes = [
           component: IndividualCollectionSheetComponent,
           resolve: {
             officesData: OfficesResolver
-          }
+          },
+          providers: [
+            OfficesResolver
+          ]
         },
         {
           path: 'collection-sheet',
@@ -44,7 +47,10 @@ const routes: Routes = [
           component: CollectionSheetComponent,
           resolve: {
             officesData: OfficesResolver
-          }
+          },
+          providers: [
+            OfficesResolver
+          ]
         }
       ]
     }

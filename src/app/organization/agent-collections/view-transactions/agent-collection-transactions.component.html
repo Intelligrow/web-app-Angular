@@ -1,0 +1,139 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="container">
+  @if (showParameters) {
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="filterForm" class="filter-form">
+          <!-- Row 1 -->
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.Agent' | translate }}</mat-label>
+            <mat-select formControlName="agentId" [compareWith]="compareOptionIds">
+              <mat-option value="">
+                {{ 'labels.buttons.All' | translate }}
+              </mat-option>
+
+              @for (agent of agentOptions; track agent.id) {
+                <mat-option [value]="agent.id">
+                  {{ optionDisplay(agent) }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+            <mat-select formControlName="officeId" [compareWith]="compareOptionIds">
+              <mat-option value="">
+                {{ 'labels.buttons.All' | translate }}
+              </mat-option>
+
+              @for (office of officeOptions; track office.id) {
+                <mat-option [value]="office.id">
+                  {{ optionDisplay(office) }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
+            <input matInput [matDatepicker]="transactionsFromDatePicker" formControlName="fromDate" />
+            <mat-datepicker-toggle matSuffix [for]="transactionsFromDatePicker"> </mat-datepicker-toggle>
+            <mat-datepicker #transactionsFromDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Row 2 -->
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
+            <input matInput [matDatepicker]="transactionsToDatePicker" formControlName="toDate" />
+            <mat-datepicker-toggle matSuffix [for]="transactionsToDatePicker"> </mat-datepicker-toggle>
+            <mat-datepicker #transactionsToDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.Transaction Type' | translate }}</mat-label>
+            <mat-select formControlName="transactionType">
+              <mat-option value="all">all</mat-option>
+
+              @for (type of transactionTypes; track type.value) {
+                <mat-option [value]="type.value">
+                  {{ type.label | translate }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+            <mat-select formControlName="status">
+              @for (status of statusOptions; track status) {
+                <mat-option [value]="status">
+                  {{ status }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Row 3 -->
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'labels.inputs.Settlement Id' | translate }}</mat-label>
+            <input matInput type="number" formControlName="settlementId" />
+          </mat-form-field>
+
+          <!-- Empty columns to keep alignment -->
+          <div></div>
+          <div></div>
+
+          <!-- Buttons -->
+          <div class="filter-actions">
+            <button mat-raised-button color="primary" type="button" (click)="loadTransactions()">
+              {{ 'labels.buttons.Search' | translate }}
+            </button>
+
+            <button mat-button type="button" (click)="resetFilters()">
+              {{ 'labels.buttons.Reset' | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
+
+<!-- Table -->
+<div class="container">
+  <!-- View Parameters -->
+  @if (!showParameters) {
+    <div class="parameters-action">
+      <button mat-raised-button color="primary" type="button" (click)="viewParameters()">View Parameters</button>
+    </div>
+  }
+
+  <div class="mat-elevation-z8 table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      @for (column of displayedColumns; track column) {
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ columnLabel(column) | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let transaction">
+            {{ displayCell(transaction, column) }}
+          </td>
+        </ng-container>
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons> </mat-paginator>
+  </div>
+</div>

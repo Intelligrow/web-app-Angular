@@ -85,17 +85,15 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
-import {
-  AgentCollectionDetailComponent,
-  AgentCollectionFormComponent,
-  AgentCollectionStatementComponent,
-  AgentCollectionSummaryComponent,
-  AgentCollectionTransactionsComponent,
-  AgentCollectionsComponent,
-  AgentSettlementDetailComponent,
-  AgentSettlementFormComponent,
-  AgentSettlementsComponent
-} from './agent-collections/agent-collections.component';
+import { AgentCollectionFormComponent } from './agent-collections/create-agent/agent-collection-form.component';
+import { AgentSettlementFormComponent } from './agent-collections/create-settlement/agent-settlement-form.component';
+import { AgentCollectionDetailComponent } from './agent-collections/view-agent/agent-collection-detail.component';
+import { AgentCollectionStatementComponent } from './agent-collections/view-agent/agent-collection-statement.component';
+import { AgentCollectionSummaryComponent } from './agent-collections/view-agent/agent-collection-summary.component';
+import { AgentCollectionsComponent } from './agent-collections/view-agents/agent-collections.component';
+import { AgentSettlementDetailComponent } from './agent-collections/view-settlement/agent-settlement-detail.component';
+import { AgentSettlementsComponent } from './agent-collections/view-settlements/agent-settlements.component';
+import { AgentCollectionTransactionsComponent } from './agent-collections/view-transactions/agent-collection-transactions.component';
 
 /**
  * Organization Module

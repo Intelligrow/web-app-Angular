@@ -336,15 +336,21 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           taskPermissionName: 'CREATE_INTEREST_PAUSE'
         });
       }
-      // loan officer not assigned to loan, below logic
-      // helps to display otherwise not
-      if (!this.loanDetailsData.loanOfficerName) {
-        this.buttonConfig.addButton({
-          name: 'Assign Loan Officer',
-          icon: 'user-tie',
-          taskPermissionName: 'UPDATELOANOFFICER_LOAN'
-        });
-      }
+      // // loan officer not assigned to loan, below logic
+      // // helps to display otherwise not
+      // if (!this.loanDetailsData.loanOfficerName) {
+      //   this.buttonConfig.addButton({
+      //     name: 'Assign Loan Officer',
+      //     icon: 'user-tie',
+      //     taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+      //   });
+
+      // }
+      this.buttonConfig.addButton({
+        name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
+        icon: 'user-tie',
+        taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+      });
 
       if (this.recalculateInterest) {
         this.buttonConfig.addButton({
