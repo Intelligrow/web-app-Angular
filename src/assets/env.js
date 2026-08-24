@@ -10,9 +10,9 @@
   window['env'] = window['env'] || {};
 
   // BackEnd Environment variables
-  window['env']['fineractApiUrls'] = '';
+  window['env']['fineractApiUrls'] = 'https://localhost:8443,https://fineract.intelligrow.co';
 
-  window['env']['fineractApiUrl'] = '';
+  window['env']['fineractApiUrl'] = 'https://fineract.intelligrow.co';
 
   window['env']['apiProvider'] = '';
 
@@ -22,10 +22,10 @@
 
   window['env']['fineractPlatformTenantId'] = '';
 
-  window['env']['fineractPlatformTenantIds'] = 'aps,default';
+  window['env']['fineractPlatformTenantIds'] = 'default,fineract';
 
-  window['env']['tenantLogoUrl'] = '';
-  window['env']['tenantLogoUrlDark'] = '';
+  window['env']['tenantLogoUrl'] = 'assets/images/intelligrow-logo.png';
+  window['env']['tenantLogoUrlDark'] = 'assets/images/intelligrow-logo-dark.jpg';
 
   // Language Environment variables
   window['env']['defaultLanguage'] = '';
@@ -41,28 +41,28 @@
   window['env']['defaultCharDelimiter'] = '';
 
   // Display or not the Server Selector
-  window['env']['allowServerSwitch'] = 'true';
+  window['env']['allowServerSwitch'] = 'false';
 
   // Display or not the BackEnd Info
-  window['env']['displayBackEndInfo'] = '';
+  window['env']['displayBackEndInfo'] = 'true';
 
   // Show minimal production hero on login page
-  window['env']['productionMode'] = '';
+  window['env']['productionMode'] = 'false';
 
   // Display or not the Tenant Selector
-  window['env']['displayTenantSelector'] = 'true';
+  window['env']['displayTenantSelector'] = 'false';
 
   // Documentation base URL for in-app help links
   window['env']['documentationBaseUrl'] = '';
 
   // Time in seconds for Notifications, default 60 seconds
-  window['env']['waitTimeForNotifications'] = '';
+  window['env']['waitTimeForNotifications'] = '60';
 
   // Time in seconds for COB Catch-Up, default 30 seconds
   window['env']['waitTimeForCOBCatchUp'] = '';
 
   // Time in milliseconds for Session idle timeout, default 300000 seconds
-  window['env']['sessionIdleTimeout'] = '300000';
+  window['env']['sessionIdleTimeout'] = '500000';
 
   // OAuth Server Enabled
   window['env']['oauthServerEnabled'] = '';
@@ -89,10 +89,10 @@
   window['env']['oauthScope'] = '';
 
   // Min Password length
-  window['env']['minPasswordLength'] = '';
+  window['env']['minPasswordLength'] = '8';
 
   // Password Regex
-  window['env']['minPasswordLength'] = '';
+  window['env']['passwordRegex'] = '^.{8,50}$';
 
   // Enable or Disable HTTP Cache
   window['env']['httpCacheEnabled'] = '';

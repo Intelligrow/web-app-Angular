@@ -17,13 +17,13 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 /** Custom Imports. */
 import { activities } from './activities';
@@ -38,8 +38,8 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardImage } from '@angular/material/card';
-import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatCardHeader, MatCardTitle, MatCardImage } from '@angular/material/card';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { AsyncPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -54,11 +54,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCardHeader,
-    MatCardTitle,
+    // MatCardHeader,
+    // MatCardTitle,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    MatCardImage,
+    // MatCardImage,
     AsyncPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

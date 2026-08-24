@@ -19,7 +19,7 @@ const { HttpsProxyAgent } = require('https-proxy-agent');
 const proxyConfig = [
   {
     context: ['/fineract-provider'],
-    target: 'https://demo.mifos.community',
+    target: 'https://localhost',
     changeOrigin: true,
     secure: true,
     logLevel: 'debug',

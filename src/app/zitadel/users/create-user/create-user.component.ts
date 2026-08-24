@@ -41,6 +41,7 @@ import { UsersService } from 'app/users/users.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { COUNTRY_CODES } from 'app/zitadel/constants/coutry-codes';
 import { ZITADEL_LANGUAGES } from 'app/zitadel/constants/languages';
+import { environment } from '../../../../environments/environment';
 
 /**
  * Create user component.
@@ -65,6 +66,10 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private dialog = inject(MatDialog);
   private passwordsUtility = inject(PasswordsUtility);
+  minPasswordLength: number = environment.minPasswordLength || 12;
+  passwordRegex: string | RegExp =
+    environment.passwordRegex ||
+    `^(?!.*(.)\\1)(?!.*\\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s]).{${this.minPasswordLength},50}$`;
 
   /** User form. */
   userForm: UntypedFormGroup;
@@ -157,9 +162,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
           '',
           [
             Validators.required,
-            Validators.minLength(12),
+            Validators.minLength(this.minPasswordLength),
             Validators.maxLength(50),
-            Validators.pattern(/^(?!.*(.)\1)(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/)
+            Validators.pattern(this.passwordRegex)
           ]
         ],
         repeatPassword: [

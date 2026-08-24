@@ -22,7 +22,7 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatIcon } from '@angular/material/icon';
-import { MatDivider } from '@angular/material/divider';
+// import { MatDivider } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -42,7 +42,7 @@ import { SubmissionRecord, PagedResult, CbildRole, CBILD_ROLE_LABELS } from 'app
     MatPaginatorModule,
     MatProgressBar,
     MatIcon,
-    MatDivider,
+    // MatDivider,
     FormsModule
   ]
 })
