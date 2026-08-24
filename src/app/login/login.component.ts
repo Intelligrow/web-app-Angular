@@ -34,16 +34,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
 import { SettingsService } from 'app/settings/settings.service';
 import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
-import { ThemeToggleComponent } from '../shared/theme-toggle/theme-toggle.component';
 import { ServerSelectorComponent } from '../shared/server-selector/server-selector.component';
 import { TenantSelectorComponent } from '../shared/tenant-selector/tenant-selector.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 import { VersionService } from '../system/version.service';
 
@@ -59,17 +56,17 @@ import { TenantBrandingService, TenantBranding } from './tenant-branding.service
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     LanguageSelectorComponent,
-    ThemeToggleComponent,
+    // ThemeToggleComponent,
     ServerSelectorComponent,
     TenantSelectorComponent,
     LoginFormComponent,
     ResetPasswordComponent,
     TwoFactorAuthenticationComponent,
-    MatMenuTrigger,
-    FaIconComponent,
-    MatMenu,
-    MatMenuItem,
-    M3IconComponent
+    // MatMenuTrigger,
+    FaIconComponent
+    // MatMenu,
+    // MatMenuItem,
+    // M3IconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -88,7 +85,7 @@ export class LoginComponent implements OnInit {
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
-  
+
   private tenantBrandingService = inject(TenantBrandingService);
   branding: TenantBranding | null = null;
 

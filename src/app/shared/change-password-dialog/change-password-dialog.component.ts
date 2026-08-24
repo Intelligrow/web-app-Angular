@@ -56,6 +56,9 @@ export class ChangePasswordDialogComponent implements OnInit {
   private passwordsUtility = inject(PasswordsUtility);
 
   minPasswordLength: number = environment.minPasswordLength || 12;
+  passwordRegex: string | RegExp =
+    environment.passwordRegex ||
+    `^(?!.*(.)\\1)(?!.*\\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s]).{${this.minPasswordLength},50}$`;
 
   /** Change Password Form */
   changePasswordForm: any;
@@ -75,7 +78,12 @@ export class ChangePasswordDialogComponent implements OnInit {
       {
         password: [
           '',
-          this.passwordsUtility.getPasswordValidators()
+          [
+            Validators.required,
+            Validators.minLength(this.minPasswordLength),
+            Validators.maxLength(50),
+            Validators.pattern(this.passwordRegex)
+          ]
         ],
         repeatPassword: [
           '',

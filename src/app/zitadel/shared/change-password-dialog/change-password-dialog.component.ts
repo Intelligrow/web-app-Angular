@@ -39,6 +39,9 @@ export class ChangePasswordDialogComponent implements OnInit {
   private translateService = inject(TranslateService);
 
   minPasswordLength: number = environment.minPasswordLength || 12;
+  passwordRegex: string | RegExp =
+    environment.passwordRegex ||
+    `^(?!.*(.)\\1)(?!.*\\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s]).{${this.minPasswordLength},50}$`;
   changePasswordForm: FormGroup;
 
   private api = environment.OIDC.oidcApiUrl;
@@ -61,7 +64,7 @@ export class ChangePasswordDialogComponent implements OnInit {
             Validators.required,
             Validators.minLength(this.minPasswordLength),
             Validators.maxLength(50),
-            Validators.pattern(/^(?!.*(.)\1)(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/)
+            Validators.pattern(this.passwordRegex)
           ]
         ],
         repeatPassword: [
