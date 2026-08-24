@@ -1,0 +1,89 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="filterForm" class="layout-row responsive-column gap-20px m-b-20">
+        <mat-form-field class="flex-30">
+          <mat-label>{{ 'labels.inputs.Business Date' | translate }}</mat-label>
+          <input matInput [matDatepicker]="businessDatePicker" formControlName="businessDate" />
+          <mat-datepicker-toggle matSuffix [for]="businessDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #businessDatePicker></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="button" (click)="loadSummary()">
+          {{ 'labels.buttons.Refresh' | translate }}
+        </button>
+      </form>
+      @if (summary) {
+        <div class="summary-section mat-elevation-z2 m-b-20">
+          <table mat-table [dataSource]="agentSummaryRows">
+            @for (column of agentSummaryColumns; track column) {
+              <ng-container [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef>{{ agentSummaryColumnLabel(column) | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row[column] }}</td>
+              </ng-container>
+            }
+            <tr mat-header-row *matHeaderRowDef="agentSummaryColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: agentSummaryColumns"></tr>
+          </table>
+        </div>
+
+        <div class="summary-tables">
+          <div class="summary-section mat-elevation-z2">
+            <h3>{{ 'labels.heading.Collection Totals' | translate }}</h3>
+            <table mat-table [dataSource]="collectionRows">
+              <ng-container matColumnDef="metric">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Metric' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.label | translate }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.value }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="metricColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: metricColumns"></tr>
+            </table>
+          </div>
+
+          <div class="summary-section mat-elevation-z2">
+            <h3>{{ 'labels.heading.Settlement Position' | translate }}</h3>
+            <table mat-table [dataSource]="settlementRows">
+              <ng-container matColumnDef="metric">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Metric' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.label | translate }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.value }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="metricColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: metricColumns"></tr>
+            </table>
+          </div>
+
+          <div class="summary-section mat-elevation-z2 summary-wide">
+            <h3>{{ 'labels.heading.Remaining Limits' | translate }}</h3>
+            <table mat-table [dataSource]="limitRows">
+              <ng-container matColumnDef="metric">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Metric' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.label | translate }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.value }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="metricColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: metricColumns"></tr>
+            </table>
+          </div>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
