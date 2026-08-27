@@ -3294,7 +3294,8 @@
       "submittedOnDate": "Submitted On",
       "transactionDate": "Transaction Date",
       "transactionType": "Transaction Type",
-      "Metric": "Metric"
+      "Metric": "Metric",
+      "User Type": "User Type"
     },
     "links": {
       "Community": "Community",

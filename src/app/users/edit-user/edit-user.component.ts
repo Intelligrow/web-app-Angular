@@ -45,6 +45,8 @@ export class EditUserComponent implements OnInit {
   staffData: any;
   /** Roles Data */
   rolesData: any;
+  /** User Type data. */
+  userTypeData: any;
   /** Edit User form. */
   editUserForm: FormGroup;
 
@@ -60,6 +62,7 @@ export class EditUserComponent implements OnInit {
       this.userData = data.user;
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
+      this.userTypeData = data.usersTemplate.userTypeOptions;
     });
   }
 
@@ -73,6 +76,7 @@ export class EditUserComponent implements OnInit {
    */
   createEditUserForm() {
     const staffId = this.userData.staff ? this.userData.staff.id : null;
+    const userTypeId = this.userData.selectedUserType ? this.userData.selectedUserType.id : null;
     this.editUserForm = this.formBuilder.group({
       username: [
         this.userData.username,
@@ -105,6 +109,10 @@ export class EditUserComponent implements OnInit {
         Validators.required
       ],
       staffId: [staffId],
+      userType: [
+        userTypeId,
+        Validators.required
+      ],
       roles: [
         this.userData.selectedRoles.map((role: any) => role.id),
         Validators.required

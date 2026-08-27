@@ -63,7 +63,7 @@ export class ViewUserComponent {
    */
   delete() {
     const deleteUserDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `user ${this.userData.id}` }
+      data: { deleteContext: `user ${this.userData.username}` }
     });
     deleteUserDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
