@@ -67,6 +67,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   rolesData: any;
   /** Staff data. */
   staffData: any;
+  /** User Type data. */
+  userTypeData: any;
 
   /* Reference of create user form */
   @ViewChild('userFormRef') userFormRef: ElementRef<any>;
@@ -86,6 +88,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { usersTemplate: any }) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
+      this.userTypeData = data.usersTemplate.userTypeOptions;
     });
   }
 
@@ -136,6 +139,10 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
           Validators.required
         ],
         staffId: [''],
+        userType: [
+          '',
+          Validators.required
+        ],
         roles: [
           '',
           Validators.required

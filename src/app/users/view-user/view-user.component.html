@@ -58,6 +58,13 @@
           </div>
         </div>
 
+        @if (userData.selectedUserType) {
+          <div class="content-row">
+            <div class="label">{{ 'labels.inputs.User Type' | translate }}</div>
+            <div class="value">{{ userData.selectedUserType.value }}</div>
+          </div>
+        }
+
         <div class="content-row">
           <div class="label">{{ 'labels.buttons.Is Self Service' | translate }}</div>
           <div class="value">
