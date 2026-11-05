@@ -169,7 +169,7 @@
     <div class="layout-column flex-100 m-b-20">
       <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Family Members' | translate }}</h3>
       <mat-divider class="flex-fill"></mat-divider>
-      <mat-accordion class="flex-fill m-t-5">
+      <mat-accordion class="flex-100 m-t-5">
         @for (member of client.familyMembers; track member) {
           <mat-expansion-panel class="family-member">
             <mat-expansion-panel-header>
@@ -182,28 +182,98 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-divider></mat-divider>
-            <p>
-              {{ 'labels.inputs.First Name' | translate }} : {{ member.firstName }}<br />
-              {{ 'labels.inputs.Middle Name' | translate }} : {{ member.middleName }}<br />
-              {{ 'labels.inputs.Last Name' | translate }} : {{ member.lastName }}<br />
-              {{ 'labels.inputs.Qualification' | translate }} : {{ member.qualification }}<br />
-              {{ 'labels.inputs.Relationship' | translate }} :
-              {{ member.relationshipId | find: clientTemplate.familyMemberOptions.relationshipIdOptions : 'id' : 'name'
-              }}<br />
-              {{ 'labels.inputs.Age' | translate }} : {{ member.age }}<br />
-              {{ 'labels.inputs.Is Dependent' | translate }} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-              {{ 'labels.inputs.Marital Status' | translate }} :
-              {{
-                member.maritalStatusId
-                  | find: clientTemplate.familyMemberOptions.maritalStatusIdOptions : 'id' : 'name'
-              }}<br />
-              {{ 'labels.inputs.Gender' | translate }} :
-              {{ member.genderId | find: clientTemplate.familyMemberOptions.genderIdOptions : 'id' : 'name' }}<br />
-              {{ 'labels.inputs.Profession' | translate }} :
-              {{ member.professionId | find: clientTemplate.familyMemberOptions.professionIdOptions : 'id' : 'name'
-              }}<br />
-              {{ 'labels.inputs.Date Of Birth' | translate }} : {{ member.dateOfBirth | dateFormat }}<br />
-            </p>
+            @if (member.firstName) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.First Name' | translate }}</span>
+                <span class="flex-60">{{ member.firstName }}</span>
+              </div>
+            }
+
+            @if (member.middleName) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Middle Name' | translate }}</span>
+                <span class="flex-60">{{ member.middleName }}</span>
+              </div>
+            }
+
+            @if (member.lastName) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Last Name' | translate }}</span>
+                <span class="flex-60">{{ member.lastName }}</span>
+              </div>
+            }
+
+            @if (member.qualification) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Qualification' | translate }}</span>
+                <span class="flex-60">{{ member.qualification }}</span>
+              </div>
+            }
+
+            @if (member.relationshipId) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Relationship' | translate }}</span>
+                <span class="flex-60">
+                  {{
+                    member.relationshipId
+                      | find: clientTemplate.familyMemberOptions.relationshipIdOptions : 'id' : 'name'
+                  }}
+                </span>
+              </div>
+            }
+
+            @if (member.age != null && member.age > 0) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Age' | translate }}</span>
+                <span class="flex-60">{{ member.age }}</span>
+              </div>
+            }
+
+            @if (member.isDependent != null) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Is Dependent' | translate }}</span>
+                <span class="flex-60">{{ member.isDependent ? 'Yes' : 'No' }}</span>
+              </div>
+            }
+
+            @if (member.maritalStatusId) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Marital Status' | translate }}</span>
+                <span class="flex-60">
+                  {{
+                    member.maritalStatusId
+                      | find: clientTemplate.familyMemberOptions.maritalStatusIdOptions : 'id' : 'name'
+                  }}
+                </span>
+              </div>
+            }
+
+            @if (member.genderId) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Gender' | translate }}</span>
+                <span class="flex-60">
+                  {{ member.genderId | find: clientTemplate.familyMemberOptions.genderIdOptions : 'id' : 'name' }}
+                </span>
+              </div>
+            }
+
+            @if (member.professionId) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Profession' | translate }}</span>
+                <span class="flex-60">
+                  {{
+                    member.professionId | find: clientTemplate.familyMemberOptions.professionIdOptions : 'id' : 'name'
+                  }}
+                </span>
+              </div>
+            }
+
+            @if (member.dateOfBirth) {
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Date Of Birth' | translate }}</span>
+                <span class="flex-60">{{ member.dateOfBirth | dateFormat }}</span>
+              </div>
+            }
           </mat-expansion-panel>
         }
       </mat-accordion>

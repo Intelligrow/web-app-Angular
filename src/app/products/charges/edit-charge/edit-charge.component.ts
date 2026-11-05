@@ -195,12 +195,9 @@ export class EditChargeComponent implements OnInit {
       }
     }
     if (this.chargeData.taxGroup) {
-      this.chargeForm.addControl(
-        'taxGroupId',
-        this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true })
-      );
+      this.chargeForm.addControl('taxGroupId', this.formBuilder.control(this.chargeData.taxGroup.id));
     } else {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '' }));
+      this.chargeForm.addControl('taxGroupId', this.formBuilder.control(''));
     }
   }
 

@@ -48,9 +48,9 @@ export class SavingProductCurrencyStepComponent implements OnInit {
 
     this.savingProductCurrencyForm.patchValue({
       currencyCode: this.savingProductsTemplate?.currency?.code || this.currencyData?.[0]?.code || '',
-      digitsAfterDecimal: this.savingProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.savingProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.savingProductsTemplate.inMultiplesOf ?? ''
+      digitsAfterDecimal: this.savingProductsTemplate.currency?.decimalPlaces ?? '',
+      setMultiples: !!this.savingProductsTemplate.currency?.inMultiplesOf,
+      inMultiplesOf: this.savingProductsTemplate.currency?.inMultiplesOf ?? ''
     });
 
     this.setupConditionalValidation();

@@ -418,13 +418,22 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
 
       if (this.loansAccountTermsData) {
         if (this.loansAccountTermsData.loanProductId) {
-          let formattedDate = null;
-          if (this.loansAccountTermsData.expectedFirstRepaymentOnDate) {
-            const repaymentDate = new Date(this.loansAccountTermsData.expectedFirstRepaymentOnDate);
-            formattedDate = this.formatDateToDDMMYYYY(repaymentDate);
-          }
           this.loansAccountTermsForm.patchValue({
-            repaymentsStartingFromDate: this.loansAccountTermsData.expectedFirstRepaymentOnDate && formattedDate
+            repaymentsStartingFromDate:
+              this.loansAccountTermsData.expectedFirstRepaymentOnDate &&
+              new Date(
+                this.loansAccountTermsData.expectedFirstRepaymentOnDate[0],
+                this.loansAccountTermsData.expectedFirstRepaymentOnDate[1] - 1,
+                this.loansAccountTermsData.expectedFirstRepaymentOnDate[2]
+              ),
+
+            interestChargedFromDate:
+              this.loansAccountTermsData.interestChargedFromDate &&
+              new Date(
+                this.loansAccountTermsData.interestChargedFromDate[0],
+                this.loansAccountTermsData.interestChargedFromDate[1] - 1,
+                this.loansAccountTermsData.interestChargedFromDate[2]
+              )
           });
         }
         if (this.isDelinquencyEnabled()) {
