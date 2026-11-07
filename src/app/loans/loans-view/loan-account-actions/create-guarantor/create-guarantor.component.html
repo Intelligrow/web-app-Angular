@@ -32,7 +32,7 @@
               [displayWith]="displayClient"
               (optionSelected)="clientSelected($event.option.value)"
             >
-              @for (client of clientsData; track client) {
+              @for (client of clientsData; track client.id) {
                 <mat-option [value]="client">
                   {{ client.displayName }}
                 </mat-option>
@@ -52,7 +52,7 @@
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
                 <mat-select formControlName="savingsId">
-                  @for (accountOption of accountOptions; track accountOption) {
+                  @for (accountOption of accountOptions; track accountOption.id) {
                     <mat-option [value]="accountOption.id">
                       {{ accountOption.productName }} - {{ accountOption.accountNo }}
                     </mat-option>
@@ -146,7 +146,7 @@
       </mat-card-content>
     </form>
 
-    @if (newGuarantorForm?.controls?.name?.value) {
+    @if (newGuarantorForm?.controls?.name?.value?.id) {
       <div class="mat-table">
         <div class="mat-header-row">
           <div class="mat-header-cell">{{ 'labels.inputs.Client Details' | translate }}</div>

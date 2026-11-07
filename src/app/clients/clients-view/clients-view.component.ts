@@ -23,6 +23,7 @@ import { DrawSignatureDialogComponent } from './custom-dialogs/draw-signature-di
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dialog/capture-image-dialog.component';
+import { ViewImageDialogComponent } from './custom-dialogs/view-image-dialog/view-image-dialog.component';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -401,6 +402,23 @@ export class ClientsViewComponent implements OnInit {
           this.reload();
         });
       }
+    });
+  }
+
+  /**
+   * Shows the client's profile image in a larger dialog.
+   * Does nothing when the client only has the placeholder.
+   */
+  viewProfileImage() {
+    if (!this.clientImage) {
+      return;
+    }
+    this.dialog.open(ViewImageDialogComponent, {
+      data: {
+        image: this.clientImage,
+        title: this.clientViewData.displayName
+      },
+      maxWidth: '90vw'
     });
   }
 

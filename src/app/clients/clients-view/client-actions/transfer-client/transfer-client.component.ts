@@ -19,6 +19,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Transfer Client Component
@@ -107,7 +108,17 @@ export class TransferClientComponent implements OnInit {
     };
     this.clientsService.executeClientCommand(this.clientId, 'proposeTransfer', data).subscribe({
       next: () => this.notifier.notifyAndNavigate('clients.actions.transfer.success', this.route),
-      error: () => this.notifier.notify('clients.actions.transfer.failure')
+      error: (err: HttpErrorResponse) => {
+        const apiError = err?.error?.errors?.[0];
+        const message: string | undefined =
+          apiError?.defaultUserMessage || err?.error?.defaultUserMessage || err?.error?.developerMessage;
+
+        if (message) {
+          this.notifier.notifyMessage(message);
+        } else {
+          this.notifier.notify('clients.actions.transfer.failure');
+        }
+      }
     });
   }
 }

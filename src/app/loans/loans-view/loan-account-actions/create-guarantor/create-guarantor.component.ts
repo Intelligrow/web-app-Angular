@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  AfterViewInit,
+  inject,
+  ChangeDetectorRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
@@ -18,6 +26,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 /**
  * Create Guarantor Action
@@ -36,6 +45,7 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 })
 export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
   private clientsService = inject(ClientsService);
@@ -95,6 +105,23 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
     });
   }
 
+  /** Subscribes to the current 'name' control. Call again whenever the control is re-created. */
+  private setupClientSearch() {
+    this.newGuarantorForm
+      .get('name')
+      .valueChanges.pipe(
+        filter((value: any) => typeof value === 'string' && value.trim().length >= 2),
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((value: string) => this.clientsService.getFilteredClients('displayName', 'ASC', true, value)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((data: any) => {
+        this.clientsData = data.pageItems ?? [];
+        this.cdr.markForCheck();
+      });
+  }
+
   /**
    * Add guarantor detail fields to the UI.
    */
@@ -130,7 +157,12 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
           this.newGuarantorForm.removeControl('zip');
           this.newGuarantorForm.removeControl('mobileNumber');
           this.newGuarantorForm.removeControl('housePhoneNumber');
+
+          this.clientsData = [];
+          this.accountOptions = [];
+          this.setupClientSearch();
         }
+        this.cdr.markForCheck();
       });
   }
 
@@ -155,7 +187,8 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
   clientSelected(clientDetails: any) {
     this.accountOptions = [];
     this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
-      this.accountOptions = response.accountLinkingOptions;
+      this.accountOptions = response.accountLinkingOptions ?? [];
+      this.cdr.markForCheck();
     });
   }
 
