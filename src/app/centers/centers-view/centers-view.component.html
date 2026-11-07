@@ -168,7 +168,7 @@
               </button>
             </span>
           }
-          @if (centerViewData.status.value === 'Active') {
+          @if (centerViewData.status.value === 'Pending') {
             <span>
               <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')">
                 {{ 'labels.buttons.Delete' | translate }}

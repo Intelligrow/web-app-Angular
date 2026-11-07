@@ -140,22 +140,22 @@ export class LoansAccountButtonConfiguration {
             name: 'Goodwill Credit',
             icon: 'coins',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
-          },
-          {
-            name: 'Interest Payment Waiver',
-            icon: 'coins',
-            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION'
-          },
-          {
-            name: 'Payout Refund',
-            icon: 'coins',
-            taskPermissionName: 'CREATE_PAYOUT_REFUND'
-          },
-          {
-            name: 'Merchant Issued Refund',
-            icon: 'coins',
-            taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND'
           }
+          // {
+          //   name: 'Interest Payment Waiver',
+          //   icon: 'coins',
+          //   taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION'
+          // },
+          // {
+          //   name: 'Payout Refund',
+          //   icon: 'coins',
+          //   taskPermissionName: 'CREATE_PAYOUT_REFUND'
+          // },
+          // {
+          //   name: 'Merchant Issued Refund',
+          //   icon: 'coins',
+          //   taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND'
+          // }
         ];
         break;
       default:
@@ -275,19 +275,19 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Goodwill Credit',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
-          },
-          {
-            name: 'Interest Payment Waiver',
-            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION'
-          },
-          {
-            name: 'Payout Refund',
-            taskPermissionName: 'CREATE_PAYOUT_REFUND'
-          },
-          {
-            name: 'Merchant Issued Refund',
-            taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND'
           }
+          // {
+          //   name: 'Interest Payment Waiver',
+          //   taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION'
+          // },
+          // {
+          //   name: 'Payout Refund',
+          //   taskPermissionName: 'CREATE_PAYOUT_REFUND'
+          // },
+          // {
+          //   name: 'Merchant Issued Refund',
+          //   taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND'
+          // }
         ];
         break;
       case 'Submitted and pending approval':

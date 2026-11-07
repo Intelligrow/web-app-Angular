@@ -25,6 +25,10 @@ export class ClientActionNotifierService {
     );
   }
 
+  notifyMessage(message: string): void {
+    this.snackBar.open(message, this.translateService.instant('labels.buttons.Close'), { duration: 5000 });
+  }
+
   notifyAndNavigate(messageKey: string, route: ActivatedRoute, commands: any[] = ['../../']): void {
     this.snackBar.open(
       this.translateService.instant(messageKey),

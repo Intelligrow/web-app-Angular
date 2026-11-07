@@ -14,7 +14,8 @@ import {
   ElementRef,
   AfterViewInit,
   OnDestroy,
-  inject
+  inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -45,6 +46,7 @@ export class DrawSignatureDialogComponent implements AfterViewInit, OnDestroy {
 
   /** Signature pad instance */
   private signaturePad: SignaturePad;
+  private cdr = inject(ChangeDetectorRef);
 
   /** Whether the pad has content */
   isEmpty = true;
@@ -57,6 +59,7 @@ export class DrawSignatureDialogComponent implements AfterViewInit, OnDestroy {
 
     this.signaturePad.addEventListener('endStroke', () => {
       this.isEmpty = this.signaturePad.isEmpty();
+      this.cdr.markForCheck();
     });
 
     this.resizeCanvas();

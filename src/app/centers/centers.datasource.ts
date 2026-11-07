@@ -39,6 +39,7 @@ export class CentersDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of entries within the page.
    * @param {boolean} centerActive Specify whether to only filter active centers.
+   * @param {boolean} hideClosed Specify whether to hide closed centers.
    */
   getCenters(
     filterBy: any,
@@ -46,13 +47,18 @@ export class CentersDataSource implements DataSource<any> {
     sortOrder: string = '',
     pageIndex: number = 0,
     limit: number = 10,
-    centerActive: boolean = true
+    hideClosed: boolean = true
   ) {
-    this.centersSubject.next([]);
     this.centersService.getCenters(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((centers: any) => {
-      centers.pageItems = centerActive ? centers.pageItems.filter((center: any) => center.active) : centers.pageItems;
+      const PENDING = 'groupingStatusType.pending';
+      const CLOSED = 'groupingStatusType.closed';
+
+      const pageItems = centers.pageItems.filter((center: any) =>
+        hideClosed ? center.status?.code !== CLOSED : center.status?.code !== PENDING
+      );
+
       this.recordsSubject.next(centers.totalFilteredRecords);
-      this.centersSubject.next(centers.pageItems);
+      this.centersSubject.next(pageItems);
     });
   }
 

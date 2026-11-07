@@ -432,7 +432,7 @@
     background: var(--pr-savings);
   }
 
-  &.fixed {
+  &.fixed-deposit {
     background: var(--pr-fixed);
   }
 
@@ -443,6 +443,15 @@
   &.shares {
     background: var(--pr-shares);
   }
+}
+
+.product-type-chip.fixed-deposit {
+  background: var(--pr-fixed-bg);
+  color: var(--pr-fixed);
+}
+
+.acc-balance-value.fixed-deposit {
+  color: var(--pr-fixed);
 }
 
 .account-row.sev-arrears .indicator {

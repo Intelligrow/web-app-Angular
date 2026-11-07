@@ -16,7 +16,9 @@
       accountImage
       mat-card-md-image
       class="profile-image"
+      [class.clickable]="clientImage"
       [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
+      (click)="viewProfileImage()"
     />
 
     <!-- Image action buttons -->
@@ -282,10 +284,12 @@
   </mat-menu>
 
   <mat-menu #Actions="matMenu">
-    <button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button>
-    <button mat-menu-item (click)="doAction('Transfer Client')">
-      {{ 'labels.buttons.Transfer Client' | translate }}
-    </button>
+    @if (clientViewData.status.value !== 'Closed' && clientViewData.status.value !== 'Rejected') {
+      <button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button>
+      <button mat-menu-item (click)="doAction('Transfer Client')">
+        {{ 'labels.buttons.Transfer Client' | translate }}
+      </button>
+    }
     @if (clientViewData.status.value === 'Pending') {
       <span
         ><button mat-menu-item (click)="doAction('Activate')">
@@ -350,22 +354,26 @@
   </mat-menu>
 
   <mat-menu #More="matMenu">
-    <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'">
-      {{ 'labels.buttons.Add Charge' | translate }}
-    </button>
-    <button mat-menu-item (click)="doAction('Create Collateral')">
-      {{ 'labels.buttons.Create Collateral' | translate }}
-    </button>
+    @if (clientViewData.status.value !== 'Closed' && clientViewData.status.value !== 'Rejected') {
+      <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'">
+        {{ 'labels.buttons.Add Charge' | translate }}
+      </button>
+      <button mat-menu-item (click)="doAction('Create Collateral')">
+        {{ 'labels.buttons.Create Collateral' | translate }}
+      </button>
+    }
     <button mat-menu-item (click)="doAction('Survey')" [disabled]="true">
       {{ 'labels.buttons.Survey' | translate }}
     </button>
-    <button
-      mat-menu-item
-      (click)="doAction('Update Default Savings')"
-      *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
-    >
-      {{ 'labels.buttons.Update Default Savings' | translate }}
-    </button>
+    @if (clientViewData.status.value !== 'Closed' && clientViewData.status.value !== 'Rejected') {
+      <button
+        mat-menu-item
+        (click)="doAction('Update Default Savings')"
+        *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
+      >
+        {{ 'labels.buttons.Update Default Savings' | translate }}
+      </button>
+    }
     <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
       {{ 'labels.buttons.Upload Signature' | translate }}
     </button>
@@ -375,13 +383,15 @@
     <button mat-menu-item (click)="doAction('Client Screen Reports')">
       {{ 'labels.buttons.Client Screen Reports' | translate }}
     </button>
-    <button
-      mat-menu-item
-      (click)="doAction('Create Standing Instructions')"
-      *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
-    >
-      {{ 'labels.buttons.Create Standing Instructions' | translate }}
-    </button>
+    @if (clientViewData.status.value !== 'Closed' && clientViewData.status.value !== 'Rejected') {
+      <button
+        mat-menu-item
+        (click)="doAction('Create Standing Instructions')"
+        *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
+      >
+        {{ 'labels.buttons.Create Standing Instructions' | translate }}
+      </button>
+    }
     @if (clientViewData.status.value !== 'Transfer on hold') {
       <span>
         <button
