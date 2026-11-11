@@ -137,6 +137,11 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
           this.fixedDepositsAccountTemplate.lockinPeriodFrequencyType.id,
         transferInterestToSavings: this.fixedDepositsAccountTemplate.transferInterestToSavings
       });
+      if (this.fixedDepositsAccountTemplate.transferInterestToSavings) {
+        this.fixedDepositAccountSettingsForm.patchValue({
+          linkAccountId: this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id
+        });
+      }
     }
   }
 
@@ -167,15 +172,17 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   buildDependencies() {
     this.fixedDepositAccountSettingsForm.get('transferInterestToSavings')!.valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.fixedDepositAccountSettingsForm.addControl(
-          'linkAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositAccountSettingsForm
-          .get('linkAccountId')!
-          .patchValue(
-            this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id
+        if (!this.fixedDepositAccountSettingsForm.contains('linkAccountId')) {
+          this.fixedDepositAccountSettingsForm.addControl(
+            'linkAccountId',
+            new UntypedFormControl('', Validators.required)
           );
+          this.fixedDepositAccountSettingsForm
+            .get('linkAccountId')!
+            .patchValue(
+              this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id
+            );
+        }
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
       }
