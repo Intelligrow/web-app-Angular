@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
@@ -34,6 +34,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private translateService = inject(TranslateService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Indicates If the Schedule has been changed */
   wasChanged = false;
@@ -57,6 +58,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
     this.loanService.getLoanAccountResource(this.loanId, 'repaymentSchedule').subscribe({
       next: (response: { repaymentSchedule: EditableRepaymentSchedule }) => {
         this.repaymentScheduleDetails = response.repaymentSchedule;
+        this.changeDetectorRef.markForCheck();
       },
       error: (err) => {
         console.error('Failed to load repayment schedule:', err);
