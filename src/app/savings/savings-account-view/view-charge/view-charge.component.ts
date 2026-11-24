@@ -87,7 +87,7 @@ export class ViewChargeComponent {
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: '',
+        value: this.chargeData.amount || this.chargeData.amountOrPercentage,
         type: 'number',
         required: true
       }),
