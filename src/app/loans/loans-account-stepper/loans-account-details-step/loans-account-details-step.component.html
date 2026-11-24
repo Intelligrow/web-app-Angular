@@ -32,7 +32,7 @@
           ></ngx-mat-select-search>
         </mat-option>
         @for (product of productData | async; track product) {
-          <mat-option [value]="product.shortName" class="product-option">
+          <mat-option [value]="product.shortName || product.id" class="product-option">
             <ng-container
               [ngTemplateOutlet]="productOption"
               [ngTemplateOutletContext]="{ product: product }"

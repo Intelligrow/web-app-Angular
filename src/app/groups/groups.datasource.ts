@@ -46,13 +46,18 @@ export class GroupsDataSource implements DataSource<any> {
     sortOrder: string = '',
     pageIndex: number = 0,
     limit: number = 10,
+    hideClosed: boolean = true,
     groupActive: boolean = true
   ) {
     this.groupsSubject.next([]);
     this.groupsService.getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((groups: any) => {
-      groups.pageItems = groupActive ? groups.pageItems.filter((group: any) => group.active) : groups.pageItems;
+      const PENDING = 'groupingStatusType.pending';
+      const CLOSED = 'groupingStatusType.closed';
+      const pageItems = groups.pageItems.filter((group: any) =>
+        hideClosed ? group.status?.code !== CLOSED : group.status?.code !== PENDING
+      );
       this.recordsSubject.next(groups.totalFilteredRecords);
-      this.groupsSubject.next(groups.pageItems);
+      this.groupsSubject.next(pageItems);
     });
   }
 

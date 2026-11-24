@@ -57,8 +57,8 @@ export class CloseCenterComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { centeractionData: any }) => {
-      this.closureData = data.centeractionData.closureReasons;
+    this.route.data.subscribe((data: { centersActionData: any }) => {
+      this.closureData = data.centersActionData.closureReasons;
     });
     this.centerId = this.route.parent.snapshot.params['centerId'];
   }

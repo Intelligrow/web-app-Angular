@@ -32,6 +32,8 @@ export class CenterActionsResolver {
     const actionName = route.paramMap.get('action');
     const centerId = route.paramMap.get('centerId') || route.parent.parent.paramMap.get('centerId');
     switch (actionName) {
+      case 'Close':
+        return this.centersService.getCenterClosureTemplate();
       case 'Assign Staff':
         return this.centersService.getGroupStaffData(centerId);
       case 'Attendance':

@@ -13,6 +13,7 @@ import {
   Component,
   DestroyRef,
   OnInit,
+  OnChanges,
   Input,
   Output,
   EventEmitter,
@@ -67,7 +68,7 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent implements OnInit {
+export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private loansService = inject(LoansService);
@@ -142,6 +143,16 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
     this.createLoansAccountDetailsForm();
   }
 
+  ngOnChanges(): void {
+    this.productList = (
+      this.loanProductsBasicDetails?.length
+        ? this.loanProductsBasicDetails
+        : this.loansAccountTemplate?.productOptions ?? []
+    ).slice().sort(this.commons.dynamicSort('name'));
+
+    this.productData.next(this.productList);
+    this.cdr.markForCheck();
+  }
   ngOnInit() {
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
@@ -160,9 +171,11 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         this.originatorCreationEnabled = config?.enabled ?? false;
         this.cdr.markForCheck();
       });
-    this.productList = this.loanProductsBasicDetails
-      ? this.loanProductsBasicDetails.sort(this.commons.dynamicSort('name'))
-      : [];
+    this.productList = (
+      this.loanProductsBasicDetails?.length
+        ? this.loanProductsBasicDetails
+        : this.loansAccountTemplate?.productOptions ?? []
+    ).sort(this.commons.dynamicSort('name'));
     if (this.loansAccountTemplate) {
       this.addFormControlsBasedOnProductType();
       let loanProductId: number | null = null;
@@ -351,9 +364,9 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   }
 
   productChange(event: MatSelectChange): void {
-    const productShortName = event.value;
-    this.productSelected = this.loanProductsBasicDetails.find(
-      (p: LoanProductBasicDetails) => p.shortName === productShortName
+    const selectedValue = event.value;
+    this.productSelected = this.productList.find(
+      (p: any) => p.shortName === selectedValue || p.id === selectedValue
     );
     this.getProductTemplate(true);
   }
