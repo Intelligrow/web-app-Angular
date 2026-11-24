@@ -356,27 +356,14 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * Returns Loans Account Charges and Collateral Form
    */
   get loansAccountCharges() {
-    const uniqueCharges = this.getUniqueCharges(this.chargesDataSource);
     return {
-      charges: uniqueCharges.map((charge: any) => ({
+      charges: (this.chargesDataSource ?? []).map((charge: any) => ({
         ...charge,
         chargeId: charge.chargeId ?? charge.id
       }))
     };
   }
-  private getUniqueCharges<T extends { id?: number | string; chargeId?: number | string }>(charges: T[]): T[] {
-    const uniqueChargesMap = new Map<number | string, T>();
-
-    for (const charge of charges ?? []) {
-      const chargeId = charge.chargeId ?? charge.id;
-      if (chargeId == null) {
-        continue;
-      }
-      uniqueChargesMap.set(chargeId, { ...charge, chargeId });
-    }
-
-    return Array.from(uniqueChargesMap.values());
-  }
+  
 
   get selectedClientMembers() {
     return { selectedMembers: this.activeClientMembers.filter((item: any) => item.selected) };

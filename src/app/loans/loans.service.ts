@@ -863,7 +863,7 @@ export class LoansService {
     if (loansAccountData.interestCalculationPeriodType === 0) {
       loansAccountData.allowPartialPeriodInterestCalculation = false;
     }
-    if (!(loansAccountData.isFloatingInterestRate === false)) {
+    if (loansAccountData.isFloatingInterestRate == null) {
       delete loansAccountData.isFloatingInterestRate;
     }
     if (!loansAccountData.multiDisburseLoan) {

@@ -57,7 +57,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true })
+  @ViewChild(LoansAccountChargesStepComponent, { static: false })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
 
   loansAccountAndTemplate: any;
@@ -203,21 +203,12 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const loanType = 'individual';
-    const uniqueCharges = new Map<number | string, any>();
-    (this.loansAccount.charges ?? []).forEach((charge: any) => {
-      const chargeId = charge.chargeId;
-      if (chargeId == null) {
-        return;
-      } // Skip malformed entries
-      uniqueCharges.set(chargeId, charge);
-    });
-
     const loansAccountData = {
       ...this.loansAccount,
       clientId: this.loansAccountAndTemplate.clientId,
-      charges: Array.from(uniqueCharges.values()).map((charge: any) => {
+      charges: (this.loansAccount.charges ?? []).map((charge: any) => {
         const result: any = {
-          chargeId: charge.chargeId,
+          chargeId: charge.chargeId ?? charge.id,
           amount: charge.amount,
           dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
         };

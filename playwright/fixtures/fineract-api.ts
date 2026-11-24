@@ -550,6 +550,7 @@ export class FineractApiClient {
       interestRateFrequencyType: loanTemplate.interestRateFrequencyType?.id ?? 2,
       amortizationType: loanTemplate.amortizationType?.id ?? 1,
       interestType: loanTemplate.interestType?.id ?? 0,
+      isFloatingInterestRate: loanTemplate.isFloatingInterestRate ?? false,
       interestCalculationPeriodType: loanTemplate.interestCalculationPeriodType?.id ?? 1,
       transactionProcessingStrategyCode: loanTemplate.transactionProcessingStrategyCode ?? 'mifos-standard-strategy',
       dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
