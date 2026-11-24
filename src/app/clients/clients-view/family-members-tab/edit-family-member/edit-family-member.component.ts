@@ -152,9 +152,7 @@ export class EditFamilyMemberComponent implements OnInit {
 
     // Calculate age from dateOfBirth if present
     if (prevDateOfBirth) {
-      if (formValue.dateOfBirth instanceof Date) {
-        formValue.dateOfBirth = this.dateUtils.formatDate(prevDateOfBirth, dateFormat);
-      }
+      formValue.dateOfBirth = this.dateUtils.formatDate(prevDateOfBirth, dateFormat);
       // Ensure age is calculated even if it wasn't already
       if (!formValue.age && prevDateOfBirth) {
         formValue.age = this.calculateAge(prevDateOfBirth);

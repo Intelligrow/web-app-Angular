@@ -48,7 +48,7 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
     this.recurringDepositProductCurrencyForm.patchValue({
       currencyCode: this.recurringDepositProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.recurringDepositProductsTemplate.digitsAfterDecimal ?? '',
+      digitsAfterDecimal: this.recurringDepositProductsTemplate.currency?.decimalPlaces ?? '',
       setMultiples: !!this.recurringDepositProductsTemplate.inMultiplesOf,
       inMultiplesOf: this.recurringDepositProductsTemplate.inMultiplesOf ?? ''
     });

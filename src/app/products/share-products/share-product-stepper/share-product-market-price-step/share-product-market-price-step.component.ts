@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -72,6 +72,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   @Input() shareProductsTemplate: any;
 
@@ -126,6 +127,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
       if (response.data) {
         this.marketPricePeriods.push(response.data);
         this.setShareProductMarketPriceFormDirty();
+        this.cdr.markForCheck();
       }
     });
   }
@@ -137,6 +139,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
       if (response.data) {
         this.marketPricePeriods.at(index).patchValue(response.data.value);
         this.setShareProductMarketPriceFormDirty();
+        this.cdr.markForCheck();
       }
     });
   }
@@ -149,6 +152,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
       if (response.delete) {
         this.marketPricePeriods.removeAt(index);
         this.setShareProductMarketPriceFormDirty();
+        this.cdr.markForCheck();
       }
     });
   }

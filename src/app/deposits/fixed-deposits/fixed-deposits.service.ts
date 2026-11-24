@@ -110,7 +110,7 @@ export class FixedDepositsService {
    * @returns {Observable<any>}
    */
   getFixedDepositsAccountAndTemplate(accountId: any) {
-    const httpParams = new HttpParams().set('associations', 'charges,+linkedAccount').set('template', 'true');
+    const httpParams = new HttpParams().set('associations', 'charges,linkedAccount').set('template', 'true');
     return this.http.get(`/fixeddepositaccounts/${accountId}`, { params: httpParams });
   }
 

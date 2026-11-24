@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -59,6 +59,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class ShareProductChargesStepComponent implements OnInit {
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   @Input() shareProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
@@ -89,6 +90,7 @@ export class ShareProductChargesStepComponent implements OnInit {
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
     this.pristine = false;
+    this.cdr.markForCheck();
   }
 
   deleteCharge(charge: any) {
@@ -100,6 +102,7 @@ export class ShareProductChargesStepComponent implements OnInit {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
         this.pristine = false;
+        this.cdr.markForCheck();
       }
     });
   }

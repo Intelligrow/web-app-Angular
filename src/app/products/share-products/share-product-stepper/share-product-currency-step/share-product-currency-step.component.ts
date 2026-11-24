@@ -48,9 +48,9 @@ export class ShareProductCurrencyStepComponent implements OnInit {
 
     this.shareProductCurrencyForm.patchValue({
       currencyCode: this.shareProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.shareProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.shareProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.shareProductsTemplate.inMultiplesOf ?? ''
+      digitsAfterDecimal: this.shareProductsTemplate.currency?.decimalPlaces ?? '',
+      setMultiples: !!this.shareProductsTemplate.currency?.inMultiplesOf,
+      inMultiplesOf: this.shareProductsTemplate.currency?.inMultiplesOf ?? ''
     });
 
     this.setupConditionalValidation();

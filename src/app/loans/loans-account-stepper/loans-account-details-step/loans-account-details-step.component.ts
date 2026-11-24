@@ -382,7 +382,14 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
             this.fundOptions = response.fundOptions;
             this.accountLinkingOptions = response.accountLinkingOptions;
             this.loanProductSelected = true;
-            if (response.createStandingInstructionAtDisbursement) {
+
+            if (this.loanId !== null && this.loanId !== undefined) {
+              this.loansAccountDetailsForm.patchValue({
+                linkAccountId: this.loansAccountTemplate.linkedAccount?.id ?? null,
+                createStandingInstructionAtDisbursement:
+                  this.loansAccountTemplate.createStandingInstructionAtDisbursement ?? false
+              });
+            } else if (response.createStandingInstructionAtDisbursement) {
               this.loansAccountDetailsForm
                 .get('createStandingInstructionAtDisbursement')
                 .patchValue(response.createStandingInstructionAtDisbursement);

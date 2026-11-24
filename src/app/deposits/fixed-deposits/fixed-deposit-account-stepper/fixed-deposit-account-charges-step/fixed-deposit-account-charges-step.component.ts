@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -70,6 +70,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private cdr=inject(ChangeDetectorRef);
 
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
@@ -129,6 +130,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
     this.pristine = false;
+    this.cdr.markForCheck();
   }
 
   /**
@@ -156,6 +158,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;

@@ -49,7 +49,7 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
 
     this.fixedDepositProductCurrencyForm.patchValue({
       currencyCode: this.fixedDepositProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.fixedDepositProductsTemplate.digitsAfterDecimal ?? '',
+      digitsAfterDecimal: this.fixedDepositProductsTemplate.currency?.decimalPlaces ?? '',
       setMultiples: !!this.fixedDepositProductsTemplate.inMultiplesOf,
       inMultiplesOf: this.fixedDepositProductsTemplate.inMultiplesOf ?? ''
     });
