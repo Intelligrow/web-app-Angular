@@ -8,6 +8,7 @@
 
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -50,6 +51,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   private loansService = inject(LoansService);
   private clientsService = inject(ClientsService);
   private documentPreviewService = inject(DocumentPreviewService);
+  private cdr = inject(ChangeDetectorRef);
 
   @ViewChild('lightboxRoot', { static: true }) lightboxRoot: ElementRef<HTMLElement>;
 
@@ -224,6 +226,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       .then((preview) => {
         if (preview.type === 'image') {
           this.previewThumbnails[document.id] = preview.url;
+          this.cdr.markForCheck();
         }
       })
       .catch((): void => undefined);
