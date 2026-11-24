@@ -174,9 +174,14 @@ export class GroupAttendanceComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
     const data = {
-      meetingDate: this.dateUtils.formatDate(prevMeetingDate, dateFormat),
+      meetingDate: this.dateUtils.formatDate(this.meetingDate.value, dateFormat),
       calendarId: this.groupData.collectionMeetingCalendar.id,
-      clientsAttendance: this.dataSource,
+      clientsAttendance: (this.dataSource as any[]).map((attendance: any) => ({
+        clientId: attendance.clientId,
+        attendanceType: {
+          id: attendance.attendanceType
+        }
+      })),
       dateFormat,
       locale
     };

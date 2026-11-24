@@ -220,6 +220,11 @@ export class CentersService {
     return this.http.get(`/centers/${centerId}`, { params: httpParams });
   }
 
+  getCenterClosureTemplate(): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'close');
+    return this.http.get('/centers/template', { params: httpParams });
+  }
+
   getMeetingsTemplate(centerId: any, calendarId: any): Observable<any> {
     const httpParams = new HttpParams().set('calenderId', calendarId);
     return this.http.get(`/centers/${centerId}/meetings/template`);
