@@ -22,11 +22,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 import {
+  EditablePeriod,
+  RepaymentScheduleDeleteChange,
+  RepaymentScheduleEditChange,
   RepaymentSchedule,
   RepaymentSchedulePeriod,
   RepaymentScheduleEditCache
 } from 'app/loans/models/loan-account.model';
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -94,6 +99,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
 
   /** Currency Code */
   @Input() currencyCode: string;
@@ -102,6 +108,10 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   /** Loan Repayment Schedule Details Data */
   @Input() repaymentScheduleDetails: RepaymentSchedule | null = null;
   loanDetailsDataRepaymentSchedule: RepaymentSchedule | null = null;
+
+  @Input() isEqualInstallment: boolean | null = false;
+  @Input() isEqualPrincipal: boolean | null = false;
+  @Input() isDecliningBalance: boolean | null = false;
 
   editCache: { [key: string]: RepaymentScheduleEditCache } = {};
   listOfData: RepaymentSchedulePeriod[] = [];
@@ -144,7 +154,8 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   ];
 
   /** Form functions event */
-  @Output() editPeriod = new EventEmitter();
+  @Output() editPeriod = new EventEmitter<RepaymentScheduleEditChange>();
+  @Output() deletePeriod = new EventEmitter<RepaymentScheduleDeleteChange>();
 
   businessDate: Date = new Date();
 
@@ -288,26 +299,46 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   }
 
   editInstallment(period: RepaymentSchedulePeriod): void {
-    if (!period.period) {
+    if (period.period === undefined || period.period === null) {
       return;
     }
-    this.editCache[period.period].edit = true;
+    const originalDueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+    const periodKey = period.period.toString();
+    if (this.editCache[periodKey]) {
+      this.editCache[periodKey].edit = true;
+    }
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
         controlName: 'dueDate',
         label: 'Due Date',
         value: this.dateUtils.parseDate(period.dueDate),
+        maxDate: this.settingsService.maxFutureDate,
         type: 'date',
-        required: true
-      }),
-      new InputBase({
-        controlName: 'principalDue',
-        label: 'Amount',
-        value: period.principalDue,
-        type: 'number',
         required: true
       })
     ];
+
+    if (this.isDecliningBalance && this.isEqualInstallment) {
+      formfields.push(
+        new InputBase({
+          controlName: 'installmentAmount',
+          label: 'Installment Amount',
+          value: period.totalDueForPeriod,
+          type: 'number',
+          required: true
+        })
+      );
+    } else if (!this.isDecliningBalance || this.isEqualPrincipal) {
+      formfields.push(
+        new InputBase({
+          controlName: 'principalDue',
+          label: 'Principal Amount',
+          value: period.principalDue,
+          type: 'number',
+          required: true
+        })
+      );
+    }
 
     const data = {
       title: 'Period',
@@ -315,9 +346,87 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addDialogRef.afterClosed().subscribe((response: { data?: { value?: Record<string, unknown> } }) => {
-      if (response.data) {
+      const values = response?.data?.value;
+      if (!values || !originalDueDate) {
+        if (this.editCache[periodKey]) {
+          this.editCache[periodKey].edit = false;
+        }
+        return;
+      }
+
+      const selectedDueDate = values.dueDate ?? period.dueDate;
+      const modifiedDueDate = this.dateUtils.formatDate(selectedDueDate, this.settingsService.dateFormat);
+      const installmentAmount = values.installmentAmount as number | undefined;
+      const principal = values.principalDue as number | undefined;
+      const updatedPeriod: EditablePeriod = {
+        ...period,
+        dueDate: this.dateUtils.parseDate(selectedDueDate) as unknown as number[],
+        totalDueForPeriod:
+          installmentAmount !== undefined && installmentAmount !== null ? installmentAmount : period.totalDueForPeriod,
+        principalDue: principal !== undefined && principal !== null ? principal : period.principalDue,
+        changed: true
+      };
+      const change: RepaymentScheduleEditChange = {
+        period: updatedPeriod,
+        change: {
+          dueDate: originalDueDate,
+          ...(modifiedDueDate && modifiedDueDate !== originalDueDate ? { modifiedDueDate } : {}),
+          ...(installmentAmount !== undefined &&
+          installmentAmount !== null &&
+          installmentAmount !== period.totalDueForPeriod
+            ? { installmentAmount }
+            : {}),
+          ...(principal !== undefined && principal !== null && principal !== period.principalDue ? { principal } : {})
+        }
+      };
+
+      const periods = this.repaymentScheduleDetails?.periods ?? this.listOfData;
+      const index = periods.findIndex((item) => item.period === period.period);
+      if (index !== -1 && this.repaymentScheduleDetails) {
+        const updatedPeriods = periods.map((item, itemIndex) => (itemIndex === index ? updatedPeriod : item));
+        this.repaymentScheduleDetails = { ...this.repaymentScheduleDetails, periods: updatedPeriods };
+      }
+      if (this.editCache[periodKey]) {
+        this.editCache[periodKey] = { data: updatedPeriod, edit: false };
+      }
+      this.editPeriod.emit(change);
+    });
+  }
+
+  deleteInstallment(period: RepaymentSchedulePeriod): void {
+    if (period.period === undefined || period.period === null) {
+      return;
+    }
+
+    const dueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+    if (!dueDate) {
+      return;
+    }
+
+    const confirmationDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Delete Installment'),
+        dialogContext: this.translateService.instant('labels.text.Are you sure you want to delete')
       }
     });
+    confirmationDialogRef.afterClosed().subscribe((response: { confirm?: boolean }) => {
+      if (response?.confirm) {
+        this.deletePeriod.emit({ period: { ...period } as EditablePeriod, dueDate });
+      }
+    });
+  }
+
+  canEditInstallment(period: RepaymentSchedulePeriod): boolean {
+    if (period.period === undefined || period.period === null) {
+      return false;
+    }
+
+    const scheduledPeriods = (this.repaymentScheduleDetails?.periods ?? []).filter(
+      (schedulePeriod) => schedulePeriod.period !== undefined && schedulePeriod.period !== null
+    );
+    const periodIndex = scheduledPeriods.findIndex((schedulePeriod) => schedulePeriod.period === period.period);
+
+    return periodIndex !== -1 && periodIndex < scheduledPeriods.length - 1;
   }
 
   cancelEdit(id: string): void {
@@ -336,12 +445,23 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     if (index === -1) {
       return;
     }
-    Object.assign(this.listOfData[index], this.editCache[period].data);
+    const updatedPeriod = { ...this.listOfData[index], ...this.editCache[period].data };
+    this.listOfData = this.listOfData.map((item, itemIndex) => (itemIndex === index ? updatedPeriod : item));
+    if (this.repaymentScheduleDetails) {
+      this.repaymentScheduleDetails = { ...this.repaymentScheduleDetails, periods: this.listOfData };
+    }
     this.editCache[period].edit = false;
-    this.editPeriod.emit(period);
+    const dueDate = this.dateUtils.formatDate(updatedPeriod.dueDate, this.settingsService.dateFormat);
+    if (dueDate) {
+      this.editPeriod.emit({
+        period: { ...updatedPeriod, changed: true },
+        change: { dueDate }
+      });
+    }
   }
 
   updateEditCache(): void {
+    this.editCache = {};
     if (this.repaymentScheduleDetails?.periods) {
       this.listOfData = this.repaymentScheduleDetails.periods;
       this.totalRepaymentExpected = 0;

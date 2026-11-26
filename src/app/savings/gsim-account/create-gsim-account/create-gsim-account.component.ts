@@ -148,7 +148,7 @@ export class CreateGsimAccountComponent {
   }
 
   /** Set Body for each client selected */
-  setData(client: any, isParentAccount: any): any {
+  setData(client: any, isParentAccount: any, lastApplication: any): any {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
@@ -161,6 +161,7 @@ export class CreateGsimAccountComponent {
       clientId: client.id,
       isGSIM: true,
       isParentAccount: isParentAccount,
+      lastApplication: lastApplication,
       submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),
       dateFormat,
       monthDayFormat,
@@ -173,15 +174,14 @@ export class CreateGsimAccountComponent {
 
   /** Request Body Data */
   buildRequestData(): any[] {
-    const requestData = [];
     const memberSelected = this.selectedMembers.selectedMembers;
-    for (let index = 0; index < 1; index++) {
-      requestData.push(this.setData(memberSelected[index], true));
-    }
-    for (let index = 1; index < memberSelected.length; index++) {
-      requestData.push(this.setData(memberSelected[index], false));
-    }
-    return requestData;
+
+    return memberSelected.map((member: any, index: any) => {
+      const isFirst = index === 0;
+      const isLast = index === memberSelected.length - 1 && !isFirst;
+
+      return this.setData(member, isFirst, isLast);
+    });
   }
 
   /**
