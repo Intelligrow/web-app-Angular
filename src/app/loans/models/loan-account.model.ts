@@ -171,7 +171,23 @@ export interface RepaymentScheduleEditCache {
 
 export interface ScheduleChangeRecord {
   dueDate: string;
-  installmentAmount: number;
+  modifiedDueDate?: string;
+  installmentAmount?: number;
+  principal?: number;
+}
+
+export interface RepaymentScheduleEditChange {
+  period: EditablePeriod;
+  change: ScheduleChangeRecord;
+}
+
+export interface RepaymentScheduleDeleteChange {
+  period: EditablePeriod;
+  dueDate: string;
+}
+
+export interface DeletedInstallment {
+  dueDate: string;
 }
 
 export interface LoanOriginator {

@@ -291,7 +291,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell class="center" *matCellDef="let item">
-          @if (item.period && item.period + 1 < repaymentScheduleDetails?.periods?.length) {
+          @if (canEditInstallment(item)) {
             <span>
               <ng-container>
                 <button
@@ -310,7 +310,7 @@
                   mat-icon-button
                   matTooltip="{{ 'tooltips.Delete' | translate }}"
                   matTooltipPosition="above"
-                  (click)="startEdit(item.period)"
+                  (click)="deleteInstallment(item)"
                 >
                   <fa-icon icon="trash" size="lg"></fa-icon>
                 </button>

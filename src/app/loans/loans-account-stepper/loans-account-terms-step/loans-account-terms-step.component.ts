@@ -682,6 +682,10 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     return this.loansAccountTermsForm.value.amortizationType === 0;
   }
 
+  isDecliningBalance(): boolean {
+    return this.loansAccountTermsForm.value.interestType === 0;
+  }
+
   /** Create Loans Account Terms Form */
   createloansAccountTermsForm() {
     if (this.loanProductService.isLoanProduct) {

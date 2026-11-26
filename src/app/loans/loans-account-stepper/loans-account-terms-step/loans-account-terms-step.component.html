@@ -390,13 +390,15 @@
             <input type="number" matInput formControlName="fixedPrincipalPercentagePerInstallment" step="any" />
           </mat-form-field>
         }
-        <mat-checkbox
-          class="flex-23"
-          formControlName="isEqualAmortization"
-          [checked]="loansAccountTermsData?.isEqualAmortization"
-        >
-          <p>{{ 'labels.inputs.Is Equal Amortization' | translate }}</p>
-        </mat-checkbox>
+        @if (isDecliningBalance()) {
+          <mat-checkbox
+            class="flex-23"
+            formControlName="isEqualAmortization"
+            [checked]="loansAccountTermsData?.isEqualAmortization"
+          >
+            <p>{{ 'labels.inputs.Is Equal Amortization' | translate }}</p>
+          </mat-checkbox>
+        }
       }
 
       @if (loansAccountTermsData?.isLoanProductLinkedToFloatingRate) {

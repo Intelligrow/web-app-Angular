@@ -313,11 +313,11 @@ export class AnalyticsDataSourceService {
   private resolveTrendLabel(entry: any, timescale: AnalyticsTimescale): string {
     switch (timescale) {
       case 'Day':
-        return this.formatDayLabel(entry?.days);
+        return this.formatDayLabel(this.getReportValue(entry, 'days'));
       case 'Week':
-        return `${entry?.Weeks ?? ''}`;
+        return this.normalizeWeekLabel(this.getReportValue(entry, 'weeks'));
       case 'Month':
-        return `${entry?.Months ?? ''}`;
+        return `${this.getReportValue(entry, 'months') ?? ''}`;
       default:
         return '';
     }
@@ -337,7 +337,7 @@ export class AnalyticsDataSourceService {
       case 'Week':
         while (labels.length < 12) {
           cursor.setDate(cursor.getDate() - 7);
-          labels.push(`${this.getWeekNumber(cursor)}`);
+          labels.push(this.normalizeWeekLabel(this.getWeekNumber(cursor)));
         }
         break;
       case 'Month':
@@ -367,6 +367,24 @@ export class AnalyticsDataSourceService {
   private getWeekNumber(date: Date): number {
     const firstDay = new Date(date.getFullYear(), 0, 1);
     return Math.ceil(((date.getTime() - firstDay.getTime()) / 86400000 + firstDay.getDay() + 1) / 7);
+  }
+
+  private getReportValue(entry: Record<string, unknown>, fieldName: string): unknown {
+    const matchingKey = Object.keys(entry || {}).find((key) => key.toLowerCase() === fieldName.toLowerCase());
+    return matchingKey ? entry[matchingKey] : undefined;
+  }
+
+  private normalizeWeekLabel(value: unknown): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
+
+    const numberValue = Number(value);
+    if (Number.isFinite(numberValue)) {
+      return `${numberValue}`;
+    }
+
+    return `${value}`.replace(/^week\s*/i, '').trim();
   }
 
   private getActiveLocale(): string {

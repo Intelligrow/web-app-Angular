@@ -14,7 +14,12 @@
           <mifosx-repayment-schedule-tab
             class="flex-100"
             [repaymentScheduleDetails]="repaymentScheduleDetails"
+            [isEqualInstallment]="isEqualInstallment"
+            [isEqualPrincipal]="isEqualPrincipal"
+            [isDecliningBalance]="isDecliningBalance"
             [forEditing]="true"
+            (editPeriod)="onPeriodEdited($event)"
+            (deletePeriod)="onPeriodDeleted($event)"
           >
           </mifosx-repayment-schedule-tab>
         }
